@@ -13,6 +13,10 @@ public class Maps {
 		this.maps = new HashMap<String, Stations>();
 	}
 	
+	public Map<String, Stations> getMaps() {
+		return maps;
+	}
+	
 	public void displayAllMaps() {
 		// TODO Auto-generated method stub
 		
