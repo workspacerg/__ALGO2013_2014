@@ -31,12 +31,12 @@ public class Maps {
 	
 	public void displayRelation(){
 		
-		maps.get("Nation").GetRelation().iterator();
 		
-		Iterator<Relation> it = maps.get("Nation").GetRelation().iterator();
-		 while(it.hasNext()){
-		 	System.out.println(it.next());
-		 }
+
+		 for(int i = 0 ; i < maps.get("Republique").GetRelation().size(); i++){
+			 	String maValeur = maps.get("Republique").GetRelation().get(i).display();
+			 	System.out.println("Ligne " + i + " : " + maValeur);
+			 }
 		
 	}
 	

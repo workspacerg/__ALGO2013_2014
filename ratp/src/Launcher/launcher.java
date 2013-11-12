@@ -18,14 +18,18 @@ public class launcher {
 			System.out.println("Ajout de la station republique");
 			carte.addStation("Republique") ; 
 			carte.addStation("Nation") ; 
+			carte.addStation("Jaures") ; 
 			
 			System.out.println("====================== > Ok");
 			
 			System.out.println("Affichage des sations : " );
 			carte.displayAllMaps();
 			
-			System.out.println("Ajout du liensssssssssss");
-			carte.addRelationBetween("Republique", "Nation", "5", Relation.type.Metro);
+
+			System.out.println("Ajout du lien");
+			carte.addRelationBetween("Republique", "Nation", "5", Relations.type.Metro);
+			carte.addRelationBetween("Nation", "Republique", "5", Relations.type.Metro);
+			carte.addRelationBetween("Nation", "Jaures", "8", Relations.type.Metro);
 
 			System.out.println("====================== > Ok");
 			
