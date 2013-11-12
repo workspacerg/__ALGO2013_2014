@@ -1,6 +1,7 @@
 package algo_ratp;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -17,8 +18,8 @@ public class Maps {
 		return maps;
 	}
 	
-	public void displayAllMaps() {
-		// TODO Auto-generated method stub
+	// Affiche l'ensemble de la maps	
+	public void displayAllMaps() { 
 		
 		for ( Entry<String, Stations> entry : maps.entrySet())
 		{
@@ -28,8 +29,19 @@ public class Maps {
 
 	}
 	
+	public void displayRelation(){
+		
+		maps.get("Nation").GetRelation().iterator();
+		
+		Iterator<Relations> it = maps.get("Nation").GetRelation().iterator();
+		 while(it.hasNext()){
+		 	System.out.println(it.next());
+		 }
+		
+	}
+	
 	public void findItinerary(String _arg1, String _arg2) {
-		// TODO Auto-generated method stub
+		
 
 	}
 	
@@ -54,7 +66,7 @@ public class Maps {
 		return true;
 	}
 
-	public boolean addRelationBetween(String _arg1, String _arg2){
+	public boolean addRelationBetween(String _arg1, String _arg2, String _arg3, Relations.type _arg){
 		
 		if (_arg1 == null || _arg2 == null)
 			return false;
@@ -68,8 +80,8 @@ public class Maps {
 		
 		Stations station1 = new Stations(_arg1);
 		Stations station2 = new Stations(_arg2);
+		String ligne = _arg3;
 		int time = 60;
-		String ligne = "5";
 		
 		Relations relation = new Relations(station1, station2, time, ligne);
 		
