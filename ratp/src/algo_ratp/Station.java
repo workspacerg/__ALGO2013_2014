@@ -34,11 +34,8 @@ public class Station {
 	}
 
 
-	public boolean delRelation() {
-		// TODO Auto-generated method stub
-		
-		
-		return false;
+	public boolean delRelation(Relation newRel) {
+		return relation.remove(newRel);
 	}
 
 }

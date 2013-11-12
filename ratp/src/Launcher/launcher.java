@@ -33,7 +33,7 @@ public class launcher {
 
 			System.out.println("====================== > Ok");
 			
-			carte.displayRelation("Nation");
+			carte.displayRelation("Jaures");
 			
 	
 		} catch (Exception e) {

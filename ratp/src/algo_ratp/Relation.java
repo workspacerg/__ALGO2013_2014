@@ -8,19 +8,28 @@ public class Relation {
 	private Station end;
 	private int time;
 	private String ligne;
+	private Transport typeTransport;
+	
+	public Relation(Station stationStart, Station stationEnd, int _arg3, String _arg4,Transport _typeTransport){
+		
+		start 	= stationStart;
+		end 	= stationEnd;
+		time	= _arg3;
+		ligne   = _arg4; 
+		typeTransport = _typeTransport;		
+	}
 	
 	public Relation(Station stationStart, Station stationEnd, int _arg3, String _arg4){
 		
 		start 	= stationStart;
 		end 	= stationEnd;
 		time	= _arg3;
-		ligne   = _arg4; 
-		
+		ligne   = _arg4; 	
 	}
 	
 	public String display() {
 		
-		String toReturn =  "\n	" +  start.displayName() + " \n	" + end.displayName() + "\n	Temps : " + time + "secondes \n	Ligne : " + ligne;
+		String toReturn =  "\n	" +  start.displayName() + " \n	" + end.displayName() + "\n Transport : "+ this.typeTransport.getType()+this.typeTransport.getName() +"	Temps : " + time + "secondes \n	Ligne : " + ligne;
 		
 	
 		return toReturn;
