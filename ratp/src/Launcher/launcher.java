@@ -23,7 +23,7 @@ public class launcher {
 			System.out.println("Affichage des sations : " );
 			carte.displayAllMaps();
 			
-			System.out.println("Ajout du lien");
+			System.out.println("Ajout du liensssssssssss");
 			carte.addRelationBetween("Republique", "Nation");
 			System.out.println("====================== > Ok");
 			
