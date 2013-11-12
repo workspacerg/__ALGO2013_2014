@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class Stations {
 	
 	private ArrayList<Relations> relation ;
+	private String Name;
 	
 	public Stations(String _arg){
 		relation = new ArrayList<>();
+		Name = _arg;
 	}
 	
 	public ArrayList<Relations> GetRelation() {
@@ -18,7 +20,7 @@ public class Stations {
 		
 		
 		
-		return null;
+		return Name;
 	}
 	
 	public boolean addRelation(Relations _arg1) {

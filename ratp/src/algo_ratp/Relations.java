@@ -20,7 +20,8 @@ public class Relations {
 	
 	public String display() {
 		
-		String toReturn =  "test" + start.displayName() + " " + end + "/nTemps: " + time + "/nLigne : " + ligne;
+		String toReturn =  "\n	" +  start.displayName() + " \n	" + end.displayName() + "\n	Temps : " + time + "secondes \n	Ligne : " + ligne;
+		
 	
 		return toReturn;
 

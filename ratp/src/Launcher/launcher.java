@@ -18,6 +18,7 @@ public class launcher {
 			System.out.println("Ajout de la station republique");
 			carte.addStation("Republique") ; 
 			carte.addStation("Nation") ; 
+			carte.addStation("Jaures") ; 
 			
 			System.out.println("====================== > Ok");
 			
@@ -26,6 +27,8 @@ public class launcher {
 			
 			System.out.println("Ajout du lien");
 			carte.addRelationBetween("Republique", "Nation", "5", Relations.type.Metro);
+			carte.addRelationBetween("Nation", "Republique", "5", Relations.type.Metro);
+			carte.addRelationBetween("Nation", "Jaures", "8", Relations.type.Metro);
 			System.out.println("====================== > Ok");
 			
 			carte.displayRelation();
