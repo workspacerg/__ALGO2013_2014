@@ -2,15 +2,15 @@ package algo_ratp;
 
 import java.util.ArrayList;
 
-public class Stations {
+public class Station {
 	
-	private ArrayList<Relations> relation ;
+	private ArrayList<Relation> relation ;
 	
-	public Stations(String _arg){
+	public Station(String _arg){
 		relation = new ArrayList<>();
 	}
 	
-	public ArrayList<Relations> GetRelation() {
+	public ArrayList<Relation> GetRelation() {
 		return relation;
 	}
 	
@@ -21,7 +21,7 @@ public class Stations {
 		return null;
 	}
 	
-	public boolean addRelation(Relations _arg1) {
+	public boolean addRelation(Relation _arg1) {
 		// TODO Auto-generated method stub
 		
 		

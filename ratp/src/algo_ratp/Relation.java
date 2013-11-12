@@ -1,15 +1,15 @@
 package algo_ratp;
 
-public class Relations {
+public class Relation {
 	
 	public enum type{RER, Metro, Bus };
 	
-	private Stations start;
-	private Stations end;
+	private Station start;
+	private Station end;
 	private int time;
 	private String ligne;
 	
-	public Relations(Stations stationStart, Stations stationEnd, int _arg3, String _arg4){
+	public Relation(Station stationStart, Station stationEnd, int _arg3, String _arg4){
 		
 		start 	= stationStart;
 		end 	= stationEnd;

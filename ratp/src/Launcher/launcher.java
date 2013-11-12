@@ -1,7 +1,7 @@
 package Launcher;
 
 import algo_ratp.Maps;
-import algo_ratp.Relations;
+import algo_ratp.Relation;
 
 public class launcher {
 
@@ -25,7 +25,7 @@ public class launcher {
 			carte.displayAllMaps();
 			
 			System.out.println("Ajout du liensssssssssss");
-			carte.addRelationBetween("Republique", "Nation", "5", Relations.type.Metro);
+			carte.addRelationBetween("Republique", "Nation", "5", Relation.type.Metro);
 
 			System.out.println("====================== > Ok");
 			

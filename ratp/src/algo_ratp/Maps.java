@@ -7,21 +7,21 @@ import java.util.Map.Entry;
 
 public class Maps {
 
-	private Map<String, Stations>  maps  ; 
+	private Map<String, Station>  maps  ; 
 	
 	public Maps() {
 		super();
-		this.maps = new HashMap<String, Stations>();
+		this.maps = new HashMap<String, Station>();
 	}
 	
-	public Map<String, Stations> getMaps() {
+	public Map<String, Station> getMaps() {
 		return maps;
 	}
 	
 	// Affiche l'ensemble de la maps	
 	public void displayAllMaps() { 
 		
-		for ( Entry<String, Stations> entry : maps.entrySet())
+		for ( Entry<String, Station> entry : maps.entrySet())
 		{
 		   System.out.println("		" + entry.getKey());
 		   
@@ -33,7 +33,7 @@ public class Maps {
 		
 		maps.get("Nation").GetRelation().iterator();
 		
-		Iterator<Relations> it = maps.get("Nation").GetRelation().iterator();
+		Iterator<Relation> it = maps.get("Nation").GetRelation().iterator();
 		 while(it.hasNext()){
 		 	System.out.println(it.next());
 		 }
@@ -50,7 +50,7 @@ public class Maps {
 		if (_arg1 == null )
 			return false;
 		
-		Stations newStation = new Stations(_arg1);
+		Station newStation = new Station(_arg1);
 		
 		try {
 			
@@ -66,7 +66,7 @@ public class Maps {
 		return true;
 	}
 
-	public boolean addRelationBetween(String _arg1, String _arg2, String _arg3, Relations.type _arg){
+	public boolean addRelationBetween(String _arg1, String _arg2, String _arg3, Relation.type _arg){
 		
 		if (_arg1 == null || _arg2 == null)
 			return false;
@@ -78,12 +78,12 @@ public class Maps {
 			addStation(_arg2);
 		
 		
-		Stations station1 = new Stations(_arg1);
-		Stations station2 = new Stations(_arg2);
+		Station station1 = new Station(_arg1);
+		Station station2 = new Station(_arg2);
 		String ligne = _arg3;
 		int time = 60;
 		
-		Relations relation = new Relations(station1, station2, time, ligne);
+		Relation relation = new Relation(station1, station2, time, ligne);
 		
 		maps.get(_arg1).GetRelation().add(relation);
 		maps.get(_arg2).GetRelation().add(relation);
