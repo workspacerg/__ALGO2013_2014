@@ -29,9 +29,10 @@ public class Relation {
 	
 	public String display() {
 		
-		String toReturn =  "\n	" +  start.displayName() + " \n	" + end.displayName() + "\n Transport : "+ this.typeTransport.getType()+this.typeTransport.getName() +"	Temps : " + time + "secondes \n	Ligne : " + ligne;
 		
-	
+		String toReturn = "\n	" + start.displayName() + " \n	" + end.displayName() + "\n	Temps : " + time + "secondes \n	Ligne : " + ligne;
+
+		
 		return toReturn;
 
 	}
