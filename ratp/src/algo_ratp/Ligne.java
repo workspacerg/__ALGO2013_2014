@@ -48,6 +48,7 @@ public class Ligne {
 	
 	public String displayLigne(){
 		
-		return String.format("shortname : %s, longname : %s, routecolor : %s, type : " + typeTransport  + ", stations : %s",this.short_name,this.long_name,this.route_color,stations.toString());
+		return String.format("shortname : %s, longname : %s, routecolor : %s, type : " + typeTransport  + ", stations : %s",
+				this.short_name,this.long_name,this.route_color,stations.toString());
 	}
 }

@@ -27,8 +27,6 @@ public class Plan {
 			// Création de la ligne
 			Ligne newLigne = new Ligne(tp, sn_ligne, ln_ligne, rc_ligne, id_route);
 		
-			System.out.println(newLigne.displayLigne());
-		
 			//Ajout à la carte
 			this.plan.put(id_route, newLigne);
 		}
@@ -50,6 +48,17 @@ public class Plan {
 		//System.out.println(this.plan.get(id_route).getStation(1).displayName());
 		
 		return true;
+	}
+	
+	public void getLigne(){
+		
+		for ( Entry<Integer, Ligne> entry : plan.entrySet())
+		{
+		   
+			System.out.println(plan.get(entry.getKey()).displayLigne());
+		   
+		}
+		
 	}
 	
 	// RGL end
