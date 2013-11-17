@@ -13,11 +13,11 @@ public class Station {
 		name = _name;
 	}
 	
-	public Station(String _name,float _latitude,float _longitude){
+	public Station(String _name,double d,double e){
 		name = _name;
 		correspondance = new ArrayList<>();
-		latitude = _latitude;
-		longitude = _longitude;
+		latitude = d;
+		longitude = e;
 	}
 	
 	public ArrayList<Ligne> GetCorrespondances() {

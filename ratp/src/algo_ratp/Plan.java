@@ -6,15 +6,58 @@ import java.util.Map.Entry;
 
 public class Plan {
 
-	private Map<String, Station>  maps  ; 
+	private Map<String, Station>  maps  ;
+	private Map<Integer, Ligne>  plan  ;
 	
 	public Plan() {
 		super();
 		this.maps = new HashMap<String, Station>();
+		this.plan = new HashMap<Integer, Ligne>();
 	}
 	
-	public Map<String, Station> getMaps() {
-		return maps;
+	// RGL start
+	public boolean addLigne(Type tp, String sn_ligne, String ln_ligne, String rc_ligne, Integer id_route){
+		
+		
+		//if ligne existe
+		if (this.plan.containsKey(id_route))
+			return false;
+		
+		try{
+			// Création de la ligne
+			Ligne newLigne = new Ligne(tp, sn_ligne, ln_ligne, rc_ligne, id_route);
+		
+			System.out.println(newLigne.displayLigne());
+		
+			//Ajout à la carte
+			this.plan.put(id_route, newLigne);
+		}
+		catch(Exception e){
+			return false;
+		}
+		
+		
+		return true;
+	}
+	
+	public boolean addStationToLigne(Integer id_route, Integer position,Station uneStation ){
+		
+		if (!this.plan.containsKey(id_route))
+			return false;
+		
+		this.plan.get(id_route).addStation(position, uneStation);
+		
+		//System.out.println(this.plan.get(id_route).getStation(1).displayName());
+		
+		return true;
+	}
+	
+	// RGL end
+	
+	
+	
+	public Map<Integer, Ligne> getMaps() {
+		return plan;
 	}
 	
 	// Affiche l'ensemble de la maps	
