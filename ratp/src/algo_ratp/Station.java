@@ -4,38 +4,41 @@ import java.util.ArrayList;
 
 public class Station {
 	
-	private ArrayList<Relation> relation ;
+	private ArrayList<Ligne> correspondance ;
 	private String name;
+	private double latitude;
+	private double longitude;
 	
-	public Station(String _arg){
-		name = _arg;
-		relation = new ArrayList<>();
+	public Station(String _name){
+		name = _name;
 	}
 	
-	public ArrayList<Relation> GetRelation() {
-		return relation;
+	public Station(String _name,float _latitude,float _longitude){
+		name = _name;
+		correspondance = new ArrayList<>();
+		latitude = _latitude;
+		longitude = _longitude;
+	}
+	
+	public ArrayList<Ligne> GetCorrespondances() {
+		return correspondance;
 	}
 	
 	public String displayName() {
 		return this.name;
 	}
 	
-	public boolean addRelation(Relation _arg1) {
+	public boolean addCorrespondance(Ligne _arg1) {
 		try{
 			if(_arg1 == null)
 				return false;
 
-			return relation.add(_arg1);
+			return correspondance.add(_arg1);
 		}
 		catch(Exception exp){
 			exp.printStackTrace();
 			return false;
 		}
-	}
-
-
-	public boolean delRelation(Relation newRel) {
-		return relation.remove(newRel);
 	}
 
 }

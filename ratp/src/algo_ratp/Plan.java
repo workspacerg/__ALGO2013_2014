@@ -32,8 +32,8 @@ public class Plan {
 		
 		
 		
-		 for(int i = 0 ; i < maps.get(maStation).GetRelation().size(); i++){
-			 	String maValeur = maps.get(maStation).GetRelation().get(i).display();
+		 for(int i = 0 ; i < maps.get(maStation).GetCorrespondances().size(); i++){
+			 	String maValeur = maps.get(maStation).GetCorrespondances().get(i).displayLigne();
 			 	System.out.println("Ligne " + i + " : " + maValeur);
 			 }
 		
@@ -84,8 +84,8 @@ public class Plan {
 		
 		Relation relation = new Relation(station1, station2, time, ligne);
 		
-		maps.get(_arg1).GetRelation().add(relation);
-		maps.get(_arg2).GetRelation().add(relation);
+		//maps.get(_arg1).GetCorrespondances().add(relation);
+		//maps.get(_arg2).GetCorrespondances().add(relation);
 		
 		return true;
 	}
