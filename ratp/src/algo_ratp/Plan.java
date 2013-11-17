@@ -16,7 +16,7 @@ public class Plan {
 	}
 	
 	// RGL start
-	public boolean addLigne(Type tp, String sn_ligne, String ln_ligne, String rc_ligne, Integer id_route){
+	public boolean addLigne(Type tp, String sn_ligne, String ln_ligne, String rc_ligne, String id_route,Integer position){
 		
 		
 		//if ligne existe
@@ -28,7 +28,7 @@ public class Plan {
 			Ligne newLigne = new Ligne(tp, sn_ligne, ln_ligne, rc_ligne, id_route);
 		
 			//Ajout à la carte
-			this.plan.put(id_route, newLigne);
+			this.plan.put(position, newLigne);
 		}
 		catch(Exception e){
 			return false;
@@ -117,7 +117,7 @@ public class Plan {
 		return true;
 	}
 
-	public boolean addRelationBetween(String _arg1, String _arg2, String _arg3, Relation.type _arg){
+	public boolean addRelationBetween(String _arg1, String _arg2, String _arg3){
 		
 		if (_arg1 == null || _arg2 == null)
 			return false;
@@ -134,7 +134,6 @@ public class Plan {
 		String ligne = _arg3;
 		int time = 60;
 		
-		Relation relation = new Relation(station1, station2, time, ligne);
 		
 		//maps.get(_arg1).GetCorrespondances().add(relation);
 		//maps.get(_arg2).GetCorrespondances().add(relation);

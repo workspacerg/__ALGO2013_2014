@@ -13,9 +13,9 @@ public class Ligne {
 	private String short_name;
 	private String long_name;
 	private String route_color;
-	private Integer id_route;
+	private String id_route;
 	
-	public Ligne(Type _typeT,String _sn,String _ln,String _rc, Integer id_route2){
+	public Ligne(Type _typeT,String _sn,String _ln,String _rc, String id_route2){
 		stations = new HashMap<Integer,Station>();
 		typeTransport = _typeT;
 		short_name = _sn;
@@ -26,7 +26,7 @@ public class Ligne {
 	
 	public void addStation(Integer position,Station uneStation){
 		if(stations.containsKey(position)){
-			Logger.getLogger("Ligne").log(Level.INFO, "Index utilise deja existant");
+			Logger.getLogger("Ligne").log(Level.INFO, "Index utilisé déja existant");
 			return;
 		}
 		

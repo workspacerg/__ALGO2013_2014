@@ -17,7 +17,7 @@ public class launcher {
 			System.out.println("	====================== > Ok \n");
 			
 			System.out.println("Ajout de la ligne 1 + stations");
-				if(!carte.addLigne(Type.Metro, "1", "1 (CHATEAU DE VINCENNES <-> LA DEFENSE)", "FFFFFF", 918044))
+				if(!carte.addLigne(Type.Metro, "1", "1 (CHATEAU DE VINCENNES <-> LA DEFENSE)", "FFFFFF", "918044",1))
 					System.out.println(" 	Erreur addLigne() ");
 				else{
 		
@@ -32,7 +32,7 @@ public class launcher {
 			
 			
 				System.out.println("Ajout de la ligne 1 + stations");
-				if(!carte.addLigne(Type.Metro, "5", "5 (BOBIGNY - PABLO PICASSO <-> PLACE D'ITALIE)", "FFFFFF", 708924))
+				if(!carte.addLigne(Type.Metro, "5", "5 (BOBIGNY - PABLO PICASSO <-> PLACE D'ITALIE)", "FFFFFF", "708924",1))
 					System.out.println(" 	Erreur addLigne() ");
 				else{
 		
@@ -44,7 +44,7 @@ public class launcher {
 						System.out.println("	====================== > Ok  :  " +  carte.getMaps().get(708924). getStation(1).displayName());
 				
 					System.out.println("\n");
-					carte.getLigne();;
+					carte.getLigne();
 					
 				}
 				
