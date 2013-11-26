@@ -6,17 +6,20 @@ import java.util.Map;
 
 public class Plan {
 
-	private Map<String,Station>  maps  ;
-	private Map<String,Ligne>  plan  ;
+	private Map<String,ArrayList<Station>>  maps  ;
+	private Map<String,ArrayList<Ligne>>  plan  ;
+
 	
 	public Plan() {
 		super();
-		this.maps = new HashMap<String,Station>();
-		this.plan = new HashMap<String,Ligne>();
+		this.maps = new HashMap<String,ArrayList<Station>>();
+		this.plan = new HashMap<String,ArrayList<Ligne>>();
+
 	}
 	
-	// RGL start
-	public boolean addLignes(Map<String,Ligne> lignes){
+	
+	public boolean addLigne(Map<String,ArrayList<Ligne>> lignes){
+		
 		try{
 			//Ajout à la carte
 			this.plan.putAll(lignes);
@@ -30,10 +33,13 @@ public class Plan {
 			
 	public void findItinerary(String _arg1, String _arg2) {
 		
-
+	}
+		
+	public Map<String, ArrayList<Ligne>> getMaps() {
+		return plan;
 	}
 	
-	public boolean addStations(Map<String,Station> stationList) {
+	public boolean addStations(Map<String,ArrayList<Station>> stationList) {
 		
 		if (stationList == null )
 			return false;
@@ -49,7 +55,5 @@ public class Plan {
 
 		return true;
 	}
-
-
 	
 }
