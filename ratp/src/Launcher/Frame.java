@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
+import algo_ratp.IHM.Search;
+
 public class Frame extends JFrame {
 
 	/**
