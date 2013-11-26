@@ -1,12 +1,17 @@
 package Launcher;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import algo_ratp.DALProvider;
 import algo_ratp.Plan;
 import algo_ratp.Station;
 import algo_ratp.Type;
 
 public class launcher {
 
-	public static void main(String[] args) {
+	public static void Launch() {
 		// TODO Auto-generated method stub
 		
 		System.out.println("Lancement du programme");
@@ -16,37 +21,23 @@ public class launcher {
 				Plan carte = new Plan();
 			System.out.println("	====================== > Ok \n");
 			
-			System.out.println("Ajout de la ligne 1 + stations");
-				if(!carte.addLigne(Type.Metro, "1", "1 (CHATEAU DE VINCENNES <-> LA DEFENSE)", "FFFFFF", "918044"))
-					System.out.println(" 	Erreur addLigne() ");
-				else{
-		
-					Station newStation = new Station("La defense", 0.8532843204655753, 0.8532843204655753);
-					
-					if(!carte.addStationToLigne("918044", 1, newStation))
-						System.out.println(" 	Erreur addStation() ");
-					else
-						System.out.println("	====================== > Ok  :  " +  carte.getMaps().get("918044"). getStation(1).displayName());
-				
-				}
+			//carte.addLignes(DALProvider.getInstance().GetLignes());
+			//carte.addStations(DALProvider.getInstance().GetStations());
+			//DALProvider.getInstance().close();
+			/*carte.addLigne(Type.Metro, "1", "1 (CHATEAU DE VINCENNES <-> LA DEFENSE)", "FFFFFF", "918044");
+			ArrayList<Station> stations = new ArrayList<Station>();
+			stations.add(new Station("La defense", 0.8532843204655753, 0.8532843204655753));
+			carte.addStationListToLigne("918044", stations);
+			// On vide pour utiliser qu'une map (mode flemme)
+			stations.clear();
 			
-			
-				System.out.println("Ajout de la ligne 1 + stations");
-				if(!carte.addLigne(Type.Metro, "5", "5 (BOBIGNY - PABLO PICASSO <-> PLACE D'ITALIE)", "FFFFFF", "708924"))
-					System.out.println(" 	Erreur addLigne() ");
-				else{
-		
-					Station newStation2 = new Station("Place d'italie", 0.8532843204655753, 0.8532843204655753);
+			carte.addLigne(Type.Metro, "5", "5 (BOBIGNY - PABLO PICASSO <-> PLACE D'ITALIE)", "FFFFFF", "708924");
+			stations.add(new Station("Place d'italie", 0.8532843204655753, 0.8532843204655753));
+			stations.add(new Station("Place d'italie", 0.8532843204655753, 0.8532843204655753));
+			carte.addStationListToLigne("708924", stations);
+			stations.clear();*/
 					
-					if(!carte.addStationToLigne("708924", 1, newStation2))
-						System.out.println(" 	Erreur addStation() ");
-					else
-						System.out.println("	====================== > Ok  :  " +  carte.getMaps().get("708924"). getStation(1).displayName());
 				
-					System.out.println("\n");
-					carte.getLigne();
-					
-				}
 				
 	
 		} catch (Exception e) {
