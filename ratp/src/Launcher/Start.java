@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
+import algo_ratp.IHM.Frame;
+
 public class Start {
 
 	/**

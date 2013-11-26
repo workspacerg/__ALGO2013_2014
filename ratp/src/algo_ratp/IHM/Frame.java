@@ -1,11 +1,11 @@
-package Launcher;
+package algo_ratp.IHM;
 
 import java.awt.Container;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import algo_ratp.IHM.Search;
+import Launcher.AutoCompleteModel;
 
 public class Frame extends JFrame {
 
