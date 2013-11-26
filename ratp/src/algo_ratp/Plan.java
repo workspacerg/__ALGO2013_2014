@@ -1,34 +1,25 @@
 package algo_ratp;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class Plan {
 
-	private Map<String, Station>  maps  ;
-	private Map<String, Ligne>  plan  ;
+	private Map<String,Station>  maps  ;
+	private Map<String,Ligne>  plan  ;
 	
 	public Plan() {
 		super();
-		this.maps = new HashMap<String, Station>();
-		this.plan = new HashMap<String, Ligne>();
+		this.maps = new HashMap<String,Station>();
+		this.plan = new HashMap<String,Ligne>();
 	}
 	
 	// RGL start
-	public boolean addLigne(Type tp, String sn_ligne, String ln_ligne, String rc_ligne, String id_route){
-		
-		
-		//if ligne existe
-		if (this.plan.containsKey(id_route))
-			return false;
-		
+	public boolean addLignes(Map<String,Ligne> lignes){
 		try{
-			// Création de la ligne
-			Ligne newLigne = new Ligne(tp, sn_ligne, ln_ligne, rc_ligne, id_route);
-		
 			//Ajout à la carte
-			this.plan.put(id_route, newLigne);
+			this.plan.putAll(lignes);
 		}
 		catch(Exception e){
 			return false;
@@ -36,77 +27,20 @@ public class Plan {
 		
 		return true;
 	}
-	
-	public boolean addStationToLigne(String id_route, Integer position,Station uneStation ){
-		
-		if (!this.plan.containsKey(id_route))
-			return false;
-		
-		this.plan.get(id_route).addStation(position, uneStation);
-		
-		//System.out.println(this.plan.get(id_route).getStation(1).displayName());
-		
-		return true;
-	}
-	
-	public void getLigne(){
-		
-		for ( Entry<String, Ligne> entry : plan.entrySet())
-		{
-		   
-			System.out.println(plan.get(entry.getKey()).displayLigne());
-		   
-		}
-		
-	}
-	
-	// RGL end
-	
-	
-	
-	public Map<String, Ligne> getMaps() {
-		return plan;
-	}
-	
-	// Affiche l'ensemble de la maps	
-	public void displayAllMaps() { 
-		
-		for ( Entry<String, Station> entry : maps.entrySet())
-		{
-		   System.out.println("		" + entry.getKey());
-		   
-		}
-
-	}
-	
-	public void displayRelation(String maStation){
-		
-		
-		
-		 for(int i = 0 ; i < maps.get(maStation).GetCorrespondances().size(); i++){
-			 	String maValeur = maps.get(maStation).GetCorrespondances().get(i).displayLigne();
-			 	System.out.println("Ligne " + i + " : " + maValeur);
-			 }
-		
-	}
-	
+			
 	public void findItinerary(String _arg1, String _arg2) {
 		
 
 	}
 	
-	public boolean addStation(String _arg1) {
+	public boolean addStations(Map<String,Station> stationList) {
 		
-		if (_arg1 == null )
+		if (stationList == null )
 			return false;
-		
-		Station newStation = new Station(_arg1);
-		
+			
 		try {
-			
-			if (!maps.containsKey(_arg1))
-				this.maps.put(_arg1,  newStation);
-			
+			maps.putAll(stationList);
+
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -116,39 +50,6 @@ public class Plan {
 		return true;
 	}
 
-	public boolean addRelationBetween(String _arg1, String _arg2, String _arg3){
-		
-		if (_arg1 == null || _arg2 == null)
-			return false;
-		
-		if (!maps.containsKey(_arg1))
-			addStation(_arg1);
-		
-		if (!maps.containsKey(_arg2))
-			addStation(_arg2);
-		
-		
-		Station station1 = new Station(_arg1);
-		Station station2 = new Station(_arg2);
-		String ligne = _arg3;
-		int time = 60;
-		
-		
-		//maps.get(_arg1).GetCorrespondances().add(relation);
-		//maps.get(_arg2).GetCorrespondances().add(relation);
-		
-		return true;
-	}
-
-	public boolean delStation(String _arg1) {
-		
-		if(!this.maps.containsKey(_arg1))
-			return false;
-		
-		this.maps.remove(_arg1);
-		
-		return false;
-	}
 
 	
 }

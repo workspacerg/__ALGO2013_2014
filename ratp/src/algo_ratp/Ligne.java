@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class Ligne {
 	
-	private Map<Integer,Station> stations;
+	private ArrayList<Station> stations;
 	private Type typeTransport;
 	private String short_name;
 	private String long_name;
@@ -16,35 +16,24 @@ public class Ligne {
 	private String id_route;
 	
 	public Ligne(Type _typeT,String _sn,String _ln,String _rc, String id_route2){
-		stations = new HashMap<Integer,Station>();
+		stations = new ArrayList<Station>();
 		typeTransport = _typeT;
 		short_name = _sn;
 		long_name = _ln;
 		route_color = _rc;
 		id_route = id_route2;
 	}
-	
-	public void addStation(Integer position,Station uneStation){
-		if(stations.containsKey(position)){
-			Logger.getLogger("Ligne").log(Level.INFO, "Index utilisé déja existant");
-			return;
-		}
-		
-		if(position != null && uneStation != null)
-			stations.put(position, uneStation);
+	 	
+	public void addStation(Station uneStation){
+		if(uneStation!=null)
+			stations.add(uneStation);
 	}
 	
-	public void addStations(Map<Integer,Station> uneMap){
-		if(uneMap != null)
-			stations.putAll(uneMap);
+	public void addStations(ArrayList<Station> listStation){
+		if(listStation != null)
+			stations.addAll(listStation);
 	}
 	
-	public Station getStation(int position){
-		if(stations.containsKey(position)){
-			return stations.get(position);
-		}		
-		return null;
-	}
 	
 	public String displayLigne(){
 		

@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 public class Station {
 	
-	private ArrayList<Ligne> correspondance ;
+	private ArrayList<Ligne> correspondance;
+	private String id;
 	private String name;
 	private double latitude;
 	private double longitude;
+	private String parent_id;
 	
-	public Station(String _name){
+	public Station(String _name,String id){
 		name = _name;
 	}
 	
@@ -18,6 +20,15 @@ public class Station {
 		correspondance = new ArrayList<>();
 		latitude = d;
 		longitude = e;
+	}
+	
+	public Station(String _id,String _name,double _latitude,double _longitude,String _parent_id){
+		name = _name;
+		correspondance = new ArrayList<>();
+		latitude = _latitude;
+		longitude = _longitude;
+		id = _id;
+		parent_id = _parent_id;
 	}
 	
 	public ArrayList<Ligne> GetCorrespondances() {
