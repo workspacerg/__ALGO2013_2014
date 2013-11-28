@@ -1,4 +1,4 @@
-package Launcher;
+package algo_ratp.IHM.tools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +42,13 @@ public class AutoCompleteModel {
 	 * 	Le debut de mot
 	 * @return La liste des chaines correspondantes
 	 */
-	public List<String> getChainesCorrespondates(String debut){
+	public List<String> getChainesCorrespondates(String debut)
+	{
 		List<String> res = new ArrayList<String>();
-		for(String s : mots){
-			if(debut!=null && s.length()>=debut.length() && s.toLowerCase().contains(debut.toLowerCase())){
+		for(String s : mots)
+		{
+			if(debut!=null && s.length()>=debut.length() && s.toLowerCase().contains(debut.toLowerCase()))
+			{
 				res.add(s);
 			}
 		}
