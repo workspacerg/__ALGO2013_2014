@@ -18,7 +18,7 @@ public class launcher {
 		
 		try {
 			System.out.println("Creation de la carte : ");
-				Plan carte = new Plan();
+			//	Plan carte = new Plan();
 			System.out.println("	====================== > Ok \n");
 			
 			//carte.addLignes(DALProvider.getInstance().GetLignes());

@@ -6,17 +6,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DALProvider {
-	private DALProvider()
-	{
-		this.connect();
-	}
+	
+private DALProvider()
+{
+	
+}
  
 private static DALProvider INSTANCE = null;
-private final static String DBPath = "data-ratp";
+private final static String DBPath = "localhost/dataratp";
+private String username;
+private String password;
 private static Connection connection;
  
 /** Point d'accès pour l'instance unique du singleton */
@@ -29,36 +33,55 @@ public static DALProvider getInstance()
 	return INSTANCE;
 }
 
-private void connect() { 
+public void initIdentifiers(String userN,String password){
+	this.username = userN;
+	this.password = password;
+}
+
+public boolean connect() { 
     try {
-        Class.forName("org.sqlite.JDBC");
-        Connection connect = DriverManager.getConnection("jdbc:sqlite:" + DBPath);
+    	if(this.username == null || this.password == null)
+    	{
+    		System.out.println("Veuillez entrer vos identifiants de connexion à la BDD.");
+    		return false;
+    	}
+    	
+    	Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection connect = DriverManager.getConnection("jdbc:mysql://" + this.DBPath, this.username, this.password);
         // On test la création d'une requete
-        connection.createStatement();
+        connect.createStatement();
         connection = connect;
+        return true;
     } catch (ClassNotFoundException notFoundException) {
         notFoundException.printStackTrace();
         System.out.println("Erreur de connexion");
     } catch (SQLException sqlException) {
         sqlException.printStackTrace();
         System.out.println("Erreur de connexion");
-    }
+    } catch (InstantiationException e) {
+    	System.out.println("Erreur de connexion");
+		e.printStackTrace();
+	} catch (IllegalAccessException e) {
+		System.out.println("Erreur de connexion");
+		e.printStackTrace();
+	}
+    
+    return false;
 }
 
 public void close(){
 	 try {
          connection.close();
-         INSTANCE = null;
      } catch (SQLException e) {
          e.printStackTrace();
      }
 }
 
-public Map<String, ArrayList<Ligne>> GetLignes(){
+public ArrayList<Ligne> GetLignes(){
 	try{
-		Map<String, ArrayList<Ligne>> lignes = new HashMap<String,ArrayList<Ligne>>();
-		String requete = "SELECT route_id,route_short_name,route_long_name,route_type,route_color FROM ROUTES";
-		ResultSet result = DALProvider.query(requete);
+		ArrayList<Ligne> lignes = new ArrayList<Ligne>();
+		String requete = "SELECT route_id,route_short_name,route_long_name,route_type,route_color FROM ROUTE";
+		ResultSet result = Execquery(requete);
 		
 		Ligne li;
 		String id;
@@ -67,19 +90,14 @@ public Map<String, ArrayList<Ligne>> GetLignes(){
 		Type type;
 		String color;
 		while(result.next()){
-			 id = result.getString(0);
-			 sname = result.getString(1);
-			 lname = result.getString(2);
-			 type = Type.values()[result.getInt(3)];
-			 color = result.getString(4);
+			 id = result.getString(1);
+			 sname = result.getString(2);
+			 lname = result.getString(3);
+			 type = Type.values()[result.getInt(4)];
+			 color = result.getString(5);
 			 li = new Ligne(type,sname,lname,color,id);
-			if(lignes.containsKey(lname))
-				lignes.get(lname).add(li);
-			else{
-				ArrayList<Ligne> listl = new ArrayList<Ligne>();
-				listl.add(li);
-				lignes.put(lname,listl);
-			}
+			lignes.add(li);
+			
 		}
 		
 		return lignes;
@@ -90,44 +108,47 @@ public Map<String, ArrayList<Ligne>> GetLignes(){
 	}
 }
 
-public Map<String,ArrayList<Station>> GetStations(){
+public Map<Ligne,ArrayList<Station>> GetPlan(ArrayList<Ligne> lignes){
 	try{
-		Map<String,ArrayList<Station>> stations = new HashMap<String,ArrayList<Station>>();
-		String requete = "SELECT stop_id,stop_name,stop_lat,stop_long,parent_station FROM STOPS";
-		ResultSet result = DALProvider.query(requete);
+		ArrayList<Station> sts;
+		ArrayList<String> lis;
+		Map<Ligne,ArrayList<Station>> map = new HashMap<Ligne, ArrayList<Station>>();
+		ComparatorStation firstInstance = new ComparatorStation();
 		
-		Station st;
-		String id;
-		String name;
-		double lat;
-		double lon;
-		String parent_id;
-		while(result.next()){
-			id = result.getString(0);
-			name = result.getString(1);
-			lat = Double.parseDouble(result.getString(2));
-			lon = Double.parseDouble(result.getString(3));
-			parent_id = result.getString(4);
-			st = new Station(id,name,lat,lon,parent_id);
-			if(stations.containsKey(name))
-				stations.get(name).add(st);
-			else
-			{
-				ArrayList<Station> sts = new ArrayList<Station>();
+		for(Ligne li : lignes){
+			sts = new ArrayList<Station>();
+			String requete = "SELECT  S.stop_id,S.stop_name,stop_sequence " +
+					"FROM STOP_TIME ST,STOPS S "+
+			"WHERE Trip_id = (SELECT trip_id from trips where route_id = '"+li.getId_route()+"' LIMIT 1)"+
+			"AND S.stop_id = ST.stop_id";
+			
+			
+			ResultSet result = Execquery(requete);
+			Station st;
+			String id;
+			String name;
+			int position;
+			while(result.next()){
+				id = result.getString(1);
+				name = result.getString(2);
+				position = Integer.parseInt(result.getString(3));
+				st = new Station(name,id,position);
 				sts.add(st);
-				stations.put(name, sts);
 			}
+			
+			Collections.sort(sts,firstInstance);
+			map.put(li,sts);
 		}
 		
-		return stations;
+		return map;
 	}
 	catch(Exception exp){
+		exp.printStackTrace();
 		return null;
 	}
-	
 }
 
-private static ResultSet query(String request) {
+private static ResultSet Execquery(String request) {
     ResultSet resultat = null;
     try {
     	Statement statement = connection.createStatement();

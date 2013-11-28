@@ -3,57 +3,86 @@ package algo_ratp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Plan {
 
-	private Map<String,ArrayList<Station>>  maps  ;
-	private Map<String,ArrayList<Ligne>>  plan  ;
-
+	private Map<Ligne,ArrayList<Station>>  plan = null ;
 	
-	public Plan() {
+	public Map<Ligne, ArrayList<Station>> getPlan() {
+		if(plan == null){
+			plan = new HashMap<Ligne,ArrayList<Station>>();
+			loadPlan();
+			loadCorrespondances();
+		}
+		
+		return plan;
+	}
+
+	public void setPlan(Map<Ligne, ArrayList<Station>> plan) {
+		this.plan = plan;
+	}
+
+	private static Plan INSTANCE = null;
+	
+	private Plan() {
 		super();
-		this.maps = new HashMap<String,ArrayList<Station>>();
-		this.plan = new HashMap<String,ArrayList<Ligne>>();
 
 	}
 	
-	
-	public boolean addLigne(Map<String,ArrayList<Ligne>> lignes){
-		
-		try{
-			//Ajout à la carte
-			this.plan.putAll(lignes);
-		}
-		catch(Exception e){
-			return false;
+	public static Plan getInstance(){
+		if (INSTANCE == null)
+		{ 
+			INSTANCE = new Plan();
 		}
 		
-		return true;
+		return INSTANCE;
+	}
+		
+	public Ligne GetLigneByShortName(String name){
+		if(this.plan == null)
+			return null;
+		
+		for(Ligne l : this.plan.keySet()){
+			// Securité juste
+			if(l.getShort_name() == null)
+				continue;
+			if(l.getShort_name().equalsIgnoreCase(name.split(" ")[0]))
+				return l;
+		}
+		
+		return null;
 	}
 			
 	public void findItinerary(String _arg1, String _arg2) {
 		
 	}
-		
-	public Map<String, ArrayList<Ligne>> getMaps() {
-		return plan;
-	}
 	
-	public boolean addStations(Map<String,ArrayList<Station>> stationList) {
-		
-		if (stationList == null )
-			return false;
-			
-		try {
-			maps.putAll(stationList);
-
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-			return false;
+	private void loadCorrespondances(){
+		Map<Station,ArrayList<Ligne>> mapCorresp = new HashMap<Station, ArrayList<Ligne>>();
+		ArrayList<Ligne> lis;
+		for(Entry<Ligne,ArrayList<Station>> ent : this.plan.entrySet()){
+			for(Station s : ent.getValue()){
+				if(mapCorresp.containsKey(s)){
+					if(!mapCorresp.get(s).contains(ent.getKey()))
+						mapCorresp.get(s).add(ent.getKey());
+				}
+				else{
+					lis = new ArrayList<Ligne>();
+					lis.add(ent.getKey());
+					mapCorresp.put(s, lis);
+				}
+			}
 		}
-
-		return true;
+		
+		Correspondance.getInstance().getMapLigne().putAll(mapCorresp);
 	}
 	
+	private void loadPlan(){
+		DALProvider.getInstance().connect();
+		ArrayList<Ligne> lignes = DALProvider.getInstance().GetLignes();
+		plan.putAll(DALProvider.getInstance().GetPlan(lignes));
+		DALProvider.getInstance().close();
+	}
+		
 }

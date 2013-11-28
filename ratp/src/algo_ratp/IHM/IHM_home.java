@@ -32,7 +32,7 @@ public class IHM_home extends IHM_RATP
 	private JLabel jLab_Login = new JLabel("Nom d'utilisateur : ");
 	private JLabel jLab_Password = new JLabel("Mot de passe : ");
 	
-	IHM_home()
+	public IHM_home()
 	{
 		this.jLab_Welcome.setText("Bienvenue sur MyTraject");
 		this.setTitle("Page de démarrage");
