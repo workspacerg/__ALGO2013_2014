@@ -1,4 +1,4 @@
-package algo_ratp.IHM;
+package algo_ratp.IHM.tools;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -10,13 +10,13 @@ import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 
 
-public class Picture extends JComponent 
+public class PicturesTools extends JComponent 
 {
     private BufferedImage myPhoto;
     private File myFilePicture;
     private double myPictureRate;
  
-	public Picture() 
+	public PicturesTools() 
 	{
 	      setSize(150, 150);
 	      setBorder(BorderFactory.createLineBorder(Color.BLACK));

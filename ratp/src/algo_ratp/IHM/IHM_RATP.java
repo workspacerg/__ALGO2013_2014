@@ -2,29 +2,31 @@ package algo_ratp.IHM;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridBagLayoutInfo;
-import java.awt.Insets;
 import java.awt.TextField;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import algo_ratp.IHM.tools.AutoCompleteModel;
+import algo_ratp.IHM.tools.PicturesTools;
+
 public class IHM_RATP extends JFrame
 {
-	protected Picture icone_RATP = new Picture();
+	private static final long serialVersionUID = 1L;
+	
+	protected PicturesTools icone_RATP = new PicturesTools();
 
 	protected JLabel jLab_Welcome = new JLabel("Description",JLabel.LEFT);
 	protected JLabel jLabfootPage = new JLabel("Gabel Romain - Mirabel Andy - Mokhtar Rahmani Rayane, 4AL - Copyright ©2013",JLabel.RIGHT); //alt 0169
@@ -49,9 +51,10 @@ public class IHM_RATP extends JFrame
 	protected Font policeSmall = new Font("TimesRoman", Font.BOLD, 9);
 	protected Font police1 = new Font("TimesRoman", Font.ITALIC, 10);
 	
+	protected AutoCompleteModel AutoCpltMod_Data = initAutoCompleteMod();
+	
 	public IHM_RATP() 
 	{
-		//this.setIconImage(new ImageIcon("C:\\Users\\am\\Desktop\\","SYC.png" ).getImage());
 		this.setTitle("Page MERE ");
 		this.setBackground(Color.BLUE);
 		this.setSize(550,275);
@@ -79,8 +82,8 @@ public class IHM_RATP extends JFrame
 		jPan2.add(jLab_Welcome,bLay_Level_2.CENTER);
 		jPan2.add(icone_RATP,bLay_Level_2.EAST);
 		
-		icone_RATP.setFichierImage( Picture.createFichierImage(System.getProperty("user.dir" ).toString(),"SYC_image.jpg"));
-		icone_RATP.setPreferredSize(new Dimension(50,46));
+		icone_RATP.setFichierImage( PicturesTools.createFichierImage(System.getProperty("user.dir" ).toString()+"\\image\\","ratp.jpg"));
+		icone_RATP.setPreferredSize(new Dimension(59,46));
 		
 		jPan3.setBackground(Color.DARK_GRAY);
 		jPan3.setLayout(fLay_Level_2);
@@ -100,6 +103,27 @@ public class IHM_RATP extends JFrame
 		jLabfootPage.setForeground(Color.WHITE);
 		
 		this.setVisible(true);
+	}
+	
+	public AutoCompleteModel initAutoCompleteMod()
+	{	
+		AutoCompleteModel acm = new AutoCompleteModel();
+		ArrayList<String> ar = new ArrayList<String>();
+		
+		//EXEMPLE TEMPORAIRE EN DUR======================
+		ar.add("Bonjour");
+		ar.add("Ok");
+		ar.add("SDFKOISDF");
+		ar.add("sdf");
+		ar.add("dsklfjsdfklsdf");
+		ar.add("sf");
+		ar.add("uikhj");
+		ar.add("hjgh");
+		ar.add("gjkhjk");
+		acm.addAll(ar);
+		//EXEMPLE TEMPORAIRE EN DUR======================
+		
+		return acm;
 	}
 }
 
