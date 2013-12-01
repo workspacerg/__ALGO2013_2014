@@ -130,8 +130,15 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		}
 		if(e.getSource()==this.jBt_FindRoad)
 		{
-			this.dispose();
-			IHM_result result=new IHM_result();
+			if(false)//si les parametre de connection sont pas saisie
+			{
+				JOptionPane.showMessageDialog (this,"Renseignez les Paramètres pour vous connecter","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro 
+			}
+			else
+			{
+				this.dispose();
+				IHM_result result=new IHM_result();
+			}			
 		}
 		if(e.getSource()==this.jBt_Exit)
 		{

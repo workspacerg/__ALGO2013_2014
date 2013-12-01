@@ -33,7 +33,7 @@ public class IHM_InitIdentifier extends IHM_RATP implements ActionListener
 	public IHM_InitIdentifier()
 	{
 		
-		this.jLab_Welcome.setText("Entrez les informations de connections obligatoire");
+		this.jLab_Welcome.setText("Entrez les informations de connection obligatoires");
 		this.setTitle("Parametre de Connection");
 		
 		jPan3.add(jBt_Cancel);
