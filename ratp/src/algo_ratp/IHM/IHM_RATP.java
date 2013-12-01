@@ -2,6 +2,7 @@ package algo_ratp.IHM;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -9,12 +10,17 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -22,7 +28,7 @@ import javax.swing.border.TitledBorder;
 import algo_ratp.IHM.tools.AutoCompleteModel;
 import algo_ratp.IHM.tools.PicturesTools;
 
-public class IHM_RATP extends JFrame
+public class IHM_RATP extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	
@@ -57,7 +63,7 @@ public class IHM_RATP extends JFrame
 	{
 		this.setTitle("Page MERE ");
 		this.setBackground(Color.BLUE);
-		this.setSize(550,275);
+		this.setSize(550,375);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -124,6 +130,47 @@ public class IHM_RATP extends JFrame
 		//EXEMPLE TEMPORAIRE EN DUR======================
 		
 		return acm;
+	}
+	
+	public void ActionListenerForComponent(Container cont_temps)
+	{
+		if(cont_temps instanceof Container)
+		{
+			int i;
+			int j =cont_temps.getComponentCount();
+			for(i =0; i< j ;i++)
+			{
+				Component cmp_temps = cont_temps.getComponents()[i];
+				//System.out.println(j);
+						
+				if(cmp_temps instanceof JButton)
+				{	
+					((JButton) cmp_temps).addActionListener(this);
+				}
+				if(cmp_temps instanceof JTextField )
+				{
+					((JTextField) cmp_temps).addActionListener(this);
+				}
+				if(cmp_temps instanceof JPasswordField )
+				{
+					((JPasswordField) cmp_temps).addActionListener(this);
+				}
+				if(cmp_temps instanceof JComboBox)
+				{
+					ActionListenerForComponent((JComboBox<String>) cmp_temps);
+				}
+				if(cmp_temps instanceof Container)
+				{
+					ActionListenerForComponent((Container) cmp_temps); 
+				}
+			}
+		}	
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

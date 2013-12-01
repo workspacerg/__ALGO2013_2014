@@ -42,7 +42,7 @@ public class UserControl_Search extends JPanel
 			@Override
 			public void keyReleased(KeyEvent e) 
 			{
-				if(zoneText.getText()==null || zoneText.getText().length()==0)
+				if(zoneText.getText()==null || zoneText.getText().isEmpty())
 				{
 					windowSearch.setVisible(false);
 				}
@@ -75,6 +75,7 @@ public class UserControl_Search extends JPanel
 				}
 				else 
 				{
+					if(!zoneText.getText().isEmpty())
 					update();
 				}
 			}

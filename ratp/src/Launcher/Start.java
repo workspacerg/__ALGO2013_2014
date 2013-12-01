@@ -5,7 +5,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import algo_ratp.IHM.IHM_home;
+import algo_ratp.IHM.IHM_search;
 
 public class Start {
 
@@ -31,7 +31,7 @@ public class Start {
 		{
 			public void run()
 			{
-				new IHM_home();
+				new IHM_search();
 			}
 			
 		};		
