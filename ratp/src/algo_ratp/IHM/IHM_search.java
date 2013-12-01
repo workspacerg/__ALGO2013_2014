@@ -1,20 +1,18 @@
 package algo_ratp.IHM;
 
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import algo_ratp.IHM.tools.UserControl_Search;
 
@@ -120,8 +118,15 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		}
 		if(e.getSource()==this.jBt_AdvancedSearch)
 		{
-			this.dispose();
-			IHM_advancedSearch advancedSearch = new IHM_advancedSearch();
+			if(true)//si les parametre de connection sont pas saisie
+			{
+				JOptionPane.showMessageDialog (this,"Renseignez les Paramètres pour vous connecter","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro 
+			}
+			else
+			{
+				this.dispose();
+				IHM_advancedSearch advancedSearch = new IHM_advancedSearch();
+			}
 		}
 		if(e.getSource()==this.jBt_FindRoad)
 		{
