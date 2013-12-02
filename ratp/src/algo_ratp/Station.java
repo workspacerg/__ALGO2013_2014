@@ -60,7 +60,7 @@ public class Station {
 	        return false;
 	    }
 	    
-	    return ((Station)o).getName().equalsIgnoreCase(name);
+	    return ((Station)o).getName().equalsIgnoreCase(this.name);
 	}
 	
 

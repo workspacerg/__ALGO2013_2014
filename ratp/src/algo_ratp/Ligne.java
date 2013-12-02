@@ -61,6 +61,6 @@ public class Ligne {
 	        return false;
 	    }
 	    
-	    return ((Ligne)o).getShort_name().equals(this.short_name);
+	    return ((Ligne)o).getId_route().equals(this.id_route);
 	}
 }

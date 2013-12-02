@@ -59,18 +59,19 @@ public class Plan {
 	}
 	
 	private void loadCorrespondances(){
-		Map<Station,ArrayList<Ligne>> mapCorresp = new HashMap<Station, ArrayList<Ligne>>();
+		Map<Station,LigneCorrespondance> mapCorresp = new HashMap<Station,LigneCorrespondance>();
 		ArrayList<Ligne> lis;
 		for(Entry<Ligne,ArrayList<Station>> ent : this.plan.entrySet()){
 			for(Station s : ent.getValue()){
 				if(mapCorresp.containsKey(s)){
-					if(!mapCorresp.get(s).contains(ent.getKey()))
-						mapCorresp.get(s).add(ent.getKey());
+					if(!mapCorresp.get(s).containsLine(ent.getKey()))
+						mapCorresp.get(s).GetLignes().add(ent.getKey());
 				}
 				else{
 					lis = new ArrayList<Ligne>();
 					lis.add(ent.getKey());
-					mapCorresp.put(s, lis);
+					LigneCorrespondance lc = new LigneCorrespondance(lis);
+					mapCorresp.put(s, lc);
 				}
 			}
 		}
@@ -80,8 +81,7 @@ public class Plan {
 	
 	private void loadPlan(){
 		DALProvider.getInstance().connect();
-		ArrayList<Ligne> lignes = DALProvider.getInstance().GetLignes();
-		plan.putAll(DALProvider.getInstance().GetPlan(lignes));
+		plan.putAll(DALProvider.getInstance().GetPlan());
 		DALProvider.getInstance().close();
 	}
 		

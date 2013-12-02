@@ -1,7 +1,5 @@
 package algo_ratp.exception;
 
-public class Except {
-	
-	
+public class Except  {
 
 }

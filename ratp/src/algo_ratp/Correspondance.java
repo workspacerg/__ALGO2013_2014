@@ -6,10 +6,10 @@ import java.util.Map;
 
 public class Correspondance {
 	
-	private Map<Station,ArrayList<Ligne>> mapLigne;
+	private Map<Station,LigneCorrespondance> mapLigne;
 	private static Correspondance INSTANCE = null;
 	private Correspondance(){
-		mapLigne = new HashMap<Station, ArrayList<Ligne>>();
+		mapLigne = new HashMap<Station, LigneCorrespondance>();
 	}
 	
 	public static Correspondance getInstance(){
@@ -20,7 +20,7 @@ public class Correspondance {
 		return INSTANCE;
 	}
 
-	public Map<Station,ArrayList<Ligne>> getMapLigne() {
+	public Map<Station,LigneCorrespondance> getMapLigne() {
 		return mapLigne;
 	}
 	
