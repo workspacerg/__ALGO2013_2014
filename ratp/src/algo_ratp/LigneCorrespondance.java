@@ -14,7 +14,6 @@ public class LigneCorrespondance {
 		return lignes;
 	}
 	
-	// Pour éviter les doublons dans la map de correspondance (on s'en fiche du sens de la ligne, une correspondance = une ligne n'import quel sens)
 	public boolean containsLine(Ligne li){
 		for(Ligne l : lignes)
 			if(l.getShort_name().equalsIgnoreCase(li.getShort_name()))
