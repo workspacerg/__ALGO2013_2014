@@ -1,14 +1,35 @@
 package Launcher;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 
+
 import algo_ratp.IHM.IHM_search;
+
+import algo_ratp.Correspondance;
+import algo_ratp.DALProvider;
+import algo_ratp.Ligne;
+import algo_ratp.Plan;
+import algo_ratp.Station;
+import algo_ratp.IHM.IHM_home;
 
 public class Start {
 
+	private static String getCorresp(Station st){
+		StringBuilder sb = new StringBuilder();
+		for(Ligne li : Correspondance.getInstance().getMapLigne().get(st).GetLignes())
+			sb.append(li.getShort_name()+",");
+		
+		sb.deleteCharAt(sb.length() - 1);
+		return sb.toString();
+	}
 	/**
 	 * @param args
 	 * @throws UnsupportedLookAndFeelException 
@@ -18,6 +39,7 @@ public class Start {
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		
+				
 		for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) 
 		{
 	        if ("Nimbus".equals(info.getName())) 
@@ -36,6 +58,8 @@ public class Start {
 			
 		};		
 		SwingUtilities.invokeLater(r);
+		
 	}
+	
 
 }

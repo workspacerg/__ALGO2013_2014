@@ -4,52 +4,64 @@ import java.util.ArrayList;
 
 public class Station {
 	
-	private ArrayList<Ligne> correspondance;
 	private String id;
 	private String name;
-	private double latitude;
-	private double longitude;
-	private String parent_id;
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	private int sequence;
+
 	public Station(String _name,String id){
 		name = _name;
 	}
 	
-	public Station(String _name,double d,double e){
+	public Station(String _name,String _id,int _sequence){
 		name = _name;
-		correspondance = new ArrayList<>();
-		latitude = d;
-		longitude = e;
+		setId(_id);
+		sequence = _sequence;
 	}
 	
-	public Station(String _id,String _name,double _latitude,double _longitude,String _parent_id){
-		name = _name;
-		correspondance = new ArrayList<>();
-		latitude = _latitude;
-		longitude = _longitude;
-		id = _id;
-		parent_id = _parent_id;
+	public int getSequence() {
+		return sequence;
 	}
-	
-	public ArrayList<Ligne> GetCorrespondances() {
-		return correspondance;
+
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
 	}
 	
 	public String displayName() {
 		return this.name;
 	}
-	
-	public boolean addCorrespondance(Ligne _arg1) {
-		try{
-			if(_arg1 == null)
-				return false;
 
-			return correspondance.add(_arg1);
-		}
-		catch(Exception exp){
-			exp.printStackTrace();
-			return false;
-		}
+	public String getId() {
+		return id;
 	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	
+	
+	@Override
+    public int hashCode() {
+        return this.name.hashCode();
+    }
+	
+	@Override
+	public boolean equals(Object o) {
+	    if (o == null || o.getClass() != getClass()) { // << this is important
+	        return false;
+	    }
+	    
+	    return ((Station)o).getName().equalsIgnoreCase(this.name);
+	}
+	
 
 }
