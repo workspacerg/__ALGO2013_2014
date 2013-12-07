@@ -5,22 +5,25 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.TextField;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import algo_ratp.IHM.tools.UserControl_Search;
 
 
-public class IHM_home extends IHM_RATP
+public class IHM_search extends IHM_RATP implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
+	private JButton jBt_Parameter=new JButton("Paramètre");
 	private JButton jBt_FindRoad = new JButton("Trouver"); 
 	private JButton jBt_AdvancedSearch = new JButton("Recherche avancée"); 
+	private JButton jBt_Exit = new JButton("Exit");
 	
 	private TextField txt_Departure = new TextField();
 	private TextField txt_Arrival = new TextField();
@@ -28,13 +31,15 @@ public class IHM_home extends IHM_RATP
 	private JLabel jLab_Departure = new JLabel("Départ: ");
 	private JLabel jLab_Arrival = new JLabel("Arrivée : ");
 	
-	public IHM_home()
+	public IHM_search()
 	{
 		this.jLab_Welcome.setText("Bienvenue sur MyTraject");
-		this.setTitle("MyTraject");
+		this.setTitle("MyTraject - Recherche Rapide");
 		
+		jPan3.add(jBt_Parameter);
 		jPan3.add(jBt_AdvancedSearch);
-		jPan3.add(jBt_FindRoad);	
+		jPan3.add(jBt_FindRoad);
+		jPan3.add(jBt_Exit);
 		
 		JPanel jPan4a = new JPanel();
         jPan4a.setBackground(Color.WHITE);
@@ -93,10 +98,51 @@ public class IHM_home extends IHM_RATP
 		jLab_Departure.setFont(police);
 		jLab_Arrival.setFont(police);
 		
+		jBt_Parameter.setFont(police);
 		jBt_FindRoad.setFont(police);
 		jBt_AdvancedSearch.setFont(police);
+		jBt_Exit.setFont(police);
 		
+		ActionListenerForComponent(this.getContentPane());
 		
 		this.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{	
+		if(e.getSource()==this.jBt_Parameter)
+		{
+			this.dispose();
+			IHM_InitIdentifier initIdentifier = new IHM_InitIdentifier();
+		}
+		if(e.getSource()==this.jBt_AdvancedSearch)
+		{
+			if(true)//si les parametre de connection sont pas saisie
+			{
+				JOptionPane.showMessageDialog (this,"Renseignez les Paramètres pour vous connecter","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro 
+			}
+			else
+			{
+				this.dispose();
+				IHM_advancedSearch advancedSearch = new IHM_advancedSearch();
+			}
+		}
+		if(e.getSource()==this.jBt_FindRoad)
+		{
+			if(false)//si les parametre de connection sont pas saisie
+			{
+				JOptionPane.showMessageDialog (this,"Renseignez les Paramètres pour vous connecter","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro 
+			}
+			else
+			{
+				this.dispose();
+				IHM_result result=new IHM_result();
+			}			
+		}
+		if(e.getSource()==this.jBt_Exit)
+		{
+			this.dispose();
+		}
 	}
 }
