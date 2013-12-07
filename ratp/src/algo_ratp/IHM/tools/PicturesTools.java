@@ -15,7 +15,7 @@ public class PicturesTools extends JComponent
     private BufferedImage myPhoto;
     private File myFilePicture;
     private double myPictureRate;
- 
+    
 	public PicturesTools() 
 	{
 	      setSize(150, 150);

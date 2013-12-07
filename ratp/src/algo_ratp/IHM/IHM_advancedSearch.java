@@ -45,13 +45,31 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 		jPan3.add(jBt_FindRoad);	
 		jPan3.add(jBt_Back);
 		
+		//ajout pr le label en plus
+		
+		JPanel jPan4z = new JPanel();
+		jPan4z.setBackground(Color.WHITE);
+		jPan4z.setBorder(BorderFactory.createMatteBorder(3, 5, 3, 5, Color.BLACK));
+		jPan4z.setPreferredSize(new Dimension(405,32));
+		jPan4z.add(new JLabel("AJOUTE TON TEXT RAYANE"));
+		gBC_gBLay_Level_2.gridx = 0;
+		gBC_gBLay_Level_2.gridy = 0;
+		gBC_gBLay_Level_2.gridwidth = 2;
+		gBC_gBLay_Level_2.gridheight = 1;
+		gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
+		gBC_gBLay_Level_2.insets = new Insets(2, 2, 2, 2);
+		jPan4.add(jPan4z, gBC_gBLay_Level_2);
+				
+		//ajout pr le label en plus
+				
+				
 		JPanel jPan4a = new JPanel();
         jPan4a.setBackground(Color.WHITE);
         jPan4a.setBorder(BorderFactory.createMatteBorder(3, 5, 3, 5, Color.BLACK));
-        jPan4a.setPreferredSize(new Dimension(125,32));
+        jPan4a.setPreferredSize(new Dimension(200,32));
         jPan4a.add(jLab_Departure);
 		gBC_gBLay_Level_2.gridx = 0;
-		gBC_gBLay_Level_2.gridy = 0;
+		gBC_gBLay_Level_2.gridy = 1;
 		gBC_gBLay_Level_2.gridwidth = 1;
 		gBC_gBLay_Level_2.gridheight = 1;
 		gBC_gBLay_Level_2.anchor = GridBagConstraints.LINE_START;
@@ -59,7 +77,7 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 		jPan4.add(jPan4a, gBC_gBLay_Level_2);
          
         gBC_gBLay_Level_2.gridx = 0;
-        gBC_gBLay_Level_2.gridy = 1;
+        gBC_gBLay_Level_2.gridy = 2;
         gBC_gBLay_Level_2.gridwidth = 1;
         gBC_gBLay_Level_2.gridheight = 1;
         gBC_gBLay_Level_2.anchor = GridBagConstraints.LINE_START;
@@ -69,10 +87,10 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
         JPanel jPan4b = new JPanel();
         jPan4b.setBackground(Color.WHITE);
         jPan4b.setBorder(BorderFactory.createMatteBorder(3, 5, 3, 5, Color.BLACK));
-        jPan4b.setPreferredSize(new Dimension(125,32));
+        jPan4b.setPreferredSize(new Dimension(200,32));
         jPan4b.add(jLab_Arrival);
         gBC_gBLay_Level_2.gridx = 1;
-        gBC_gBLay_Level_2.gridy = 0;
+        gBC_gBLay_Level_2.gridy = 1;
         gBC_gBLay_Level_2.gridwidth = 1;
         gBC_gBLay_Level_2.gridheight = 1;
         gBC_gBLay_Level_2.fill=GridBagConstraints.REMAINDER;
@@ -80,7 +98,7 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
         jPan4.add(jPan4b, gBC_gBLay_Level_2);
          
         gBC_gBLay_Level_2.gridx = 1;
-        gBC_gBLay_Level_2.gridy = 1;
+        gBC_gBLay_Level_2.gridy = 2;
         gBC_gBLay_Level_2.gridwidth = 1;
         gBC_gBLay_Level_2.gridheight = 1;
         gBC_gBLay_Level_2.fill=GridBagConstraints.REMAINDER;
@@ -122,7 +140,7 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
         jPan4c.add(comboMinute);
       		
         gBC_gBLay_Level_2.gridx = 0;
-        gBC_gBLay_Level_2.gridy = 2;
+        gBC_gBLay_Level_2.gridy = 3;
         gBC_gBLay_Level_2.gridwidth =2;
         gBC_gBLay_Level_2.gridheight = 1;
         gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
@@ -150,21 +168,21 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
         jPan4e.add(jPan4d);
         
         gBC_gBLay_Level_2.gridx = 0;
-        gBC_gBLay_Level_2.gridy = 3;
+        gBC_gBLay_Level_2.gridy = 4;
         gBC_gBLay_Level_2.gridwidth = 2;
         gBC_gBLay_Level_2.gridheight = 1;
         gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
         gBC_gBLay_Level_2.insets = new Insets(2, 2, 2, 2);
         jPan4.add(jPan4e, gBC_gBLay_Level_2);
         
-        txt_Departure.setPreferredSize(new Dimension(115,25));
-		txt_Arrival.setPreferredSize(new Dimension(115,25));
+        txt_Departure.setPreferredSize(new Dimension(195,25));
+		txt_Arrival.setPreferredSize(new Dimension(195,25));
 		
-		txt_Departure.setMinimumSize(new Dimension(115,25));
-		txt_Arrival.setMinimumSize(new Dimension(115,25));
+		txt_Departure.setMinimumSize(new Dimension(195,25));
+		txt_Arrival.setMinimumSize(new Dimension(195,25));
 		
-		txt_Departure.setMaximumSize(new Dimension(115,25));
-		txt_Arrival.setMaximumSize(new Dimension(115,25));
+		txt_Departure.setMaximumSize(new Dimension(195,25));
+		txt_Arrival.setMaximumSize(new Dimension(195,25));
 		
 		txt_Departure.setFont(police);
 		txt_Arrival.setFont(police);
