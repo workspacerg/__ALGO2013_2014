@@ -6,6 +6,7 @@ public class Ligne {
 	
 	private ArrayList<Station> stations;
 	private Type typeTransport;
+
 	private String short_name;
 	public String getShort_name() {
 		return short_name;
@@ -33,6 +34,10 @@ public class Ligne {
 		id_route = id_route2;
 	}
 	 	
+	public Ligne() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void addStation(Station uneStation){
 		if(uneStation!=null)
 			stations.add(uneStation);
@@ -41,6 +46,14 @@ public class Ligne {
 	public void addStations(ArrayList<Station> listStation){
 		if(listStation != null)
 			stations.addAll(listStation);
+	}
+	
+	public Type getTypeTransport() {
+		return typeTransport;
+	}
+
+	public void setTypeTransport(Type typeTransport) {
+		this.typeTransport = typeTransport;
 	}
 	
 	
