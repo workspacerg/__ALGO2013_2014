@@ -65,7 +65,7 @@ public class IHM_RATP extends JFrame implements ActionListener
 	{
 		this.setTitle("Page MERE ");
 		this.setBackground(Color.BLUE);
-		this.setSize(550,375);
+		this.setSize(550,450);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
