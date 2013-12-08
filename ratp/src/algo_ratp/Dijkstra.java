@@ -15,7 +15,7 @@ public class Dijkstra {
 	    settledNodes = new HashSet<Relation>();
 	    unSettledNodes = new HashSet<Relation>();
 	    source.setMinDistance(0);
-	    // Initialisation du départ
+	    // Initialisation du dÃ©part
 	    Relation node = new Relation(source,0,null);
 	    unSettledNodes.add(node);
 	    
@@ -111,7 +111,7 @@ public class Dijkstra {
     		if(r.getTarget().equals(target))
     			return r;
     	}
-    	// On est pas censé arrivé jusqu'ici
+    	// On est pas censÃ© arrivÃ© jusqu'ici
     	return null;
     }
     

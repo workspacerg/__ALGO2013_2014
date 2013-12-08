@@ -20,6 +20,10 @@ import java.util.Set;
 
 public class DALProvider {
 	
+/**
+ * Constructeur par default	
+ */
+	
 private DALProvider()
 {
 	
@@ -34,7 +38,12 @@ private String password;
 private static Connection connection;
 private boolean isAuthentified = false;
  
-/** Point d'acc�s pour l'instance unique du singleton */
+
+
+/** 
+ * Point d'accés pour l'instance unique du singleton 
+ */
+
 public static DALProvider getInstance()
 {	
 	if (INSTANCE == null)
@@ -44,17 +53,43 @@ public static DALProvider getInstance()
 	return INSTANCE;
 }
 
+/**
+ * 
+ * @return Chemin d'accès de la bdd 
+ */
+
 public String getDbPath(){
 	return DBPath;
 }
+
+/**
+ * Savoir si l'utilisateur est authentifié.
+ * @return
+ */
 
 public boolean isAuth(){
 	return this.isAuthentified;
 }
 
+/**
+ * Connection à la base avec les identifiants
+ * @param userN
+ * @param password
+ * @param dbPath
+ * @return
+ */
+
 public boolean initIdentifiers(String userN,String password,String dbPath){
 	return (isAuthentified = tryConnect(userN,password,dbPath));
 }
+
+/**
+ * Appel de la méthode connection + gestion de l'erreur de connection 
+ * @param user
+ * @param passwd
+ * @param db
+ * @return
+ */
 
 public boolean tryConnect(String user,String passwd,String db){
 	this.username = user;
@@ -68,17 +103,22 @@ public boolean tryConnect(String user,String passwd,String db){
 	
 }
 
+/**
+ * Connection effective
+ * @return
+ */
+
 public boolean connect() { 
     try {
     	if(this.username == null || this.password == null)
     	{
-    		System.out.println("Veuillez entrer vos identifiants de connexion � la BDD.");
+    		System.out.println("Veuillez entrer vos identifiants de connexion à la BDD.");
     		throw new InstantiationException();
     	}
     	
     	Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection connect = DriverManager.getConnection("jdbc:mysql://" + this.DBPath, this.username, this.password);
-        // On test la cr�ation d'une requete
+        // On test la création d'une requete
         connect.createStatement();
         connection = connect;
         return true;
@@ -98,7 +138,9 @@ public boolean connect() {
     
     return false;
 }
-
+/**
+ * Fermeture de la connection à la BDD.
+ */
 public void close(){
 	 try {
          connection.close();
@@ -107,7 +149,11 @@ public void close(){
      }
 }
 
-// Selectionne les trip_id utilis� pour la cr�ation du plan
+/**
+ * Selectionne les trip_id utilisé pour la création du plan
+ * @return
+ */
+
 private String GetTripIdToPlan(){
 	try{
 		StringBuilder sb = new StringBuilder();
@@ -127,6 +173,12 @@ private String GetTripIdToPlan(){
 	}
 }
 
+/**
+ * Gestion des cas particulier
+ * exemple boucle unidirectionnel
+ * @return
+ */
+
 public Map<Station,Station> GetInterdicitons(){
 	try{
 		Map<Station,Station> inter = new HashMap<Station, Station>();
@@ -144,6 +196,16 @@ public Map<Station,Station> GetInterdicitons(){
 	}
 }
 
+/**
+ * Regerder le prochain changement
+ * 
+ * Si l'ensemble est parcouru => on est à la fin de la ligne
+ * 
+ * @param relations
+ * @param depart
+ * @return
+ */
+
 private Relation GetNextChange(LinkedList<Relation> relations, Relation depart){
 	
 	Ligne l = depart.getLigne();
@@ -155,11 +217,19 @@ private Relation GetNextChange(LinkedList<Relation> relations, Relation depart){
 			return relations.get(i);
 	}
 	
-	// Si on a fait le tour sans rien trouver c'est qu'on est � la fin 
+	// Si on a fait le tour sans rien trouver c'est qu'on est à la fin 
 	return relations.get(i-1);
 }
 
-// Retourne le prochain voyage pour cette station � l'heure voulue
+/**
+ * Retourne le prochain voyage pour cette station à l'heure voulue
+ * 
+ * @param l
+ * @param s
+ * @param departTime
+ * @return
+ */
+
 public Date GetNextTime(Ligne l,Station s,Date departTime){
 	try{
 		Station depart = Plan.getInstance().getPlan().get(l).get(0);
@@ -167,13 +237,13 @@ public Date GetNextTime(Ligne l,Station s,Date departTime){
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(departTime);
 		
-		// Le depart depuis ma station, le plus proche de l'heure entr�e
+		// Le depart depuis ma station, le plus proche de l'heure entrée
 		String requete = "SELECT ADDTIME(departure_time,SEC_TO_TIME("+distance+"*60)) AS date FROM STOP_TIME st,TRIPS t " +
 				"WHERE t.trip_id = st.trip_id AND route_id = '"+l.getId_route()+"' " +
 				"AND departure_time > ADDTIME(STR_TO_DATE('"+calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE)+"','%H:%i'),-SEC_TO_TIME("+distance+"*60)) " +
 				"ORDER BY DEPARTURE_TIME LIMIT 1";
 		ResultSet result = Execquery(requete);
-		// Limit 1 donc un seul r�sultat, on se place dessus avec result.next()
+		// Limit 1 donc un seul résultat, on se place dessus avec result.next()
 		result.next();
 		DateFormat df = new SimpleDateFormat("HH:mm:ss");
 		return df.parse(result.getString(1));
@@ -183,6 +253,14 @@ public Date GetNextTime(Ligne l,Station s,Date departTime){
 		return null;
 	}
 }
+
+/**
+ * Récupère le chemin avec la durée
+ * @param relations
+ * @param depart
+ * @return
+ */
+
 public LinkedHashMap<Relation,Date> GetRealPathWithTime(LinkedList<Relation> relations,Date depart){
 	try{
 		LinkedHashMap<Relation,Date> map = new LinkedHashMap<Relation, Date>();
@@ -219,7 +297,11 @@ public LinkedHashMap<Relation,Date> GetRealPathWithTime(LinkedList<Relation> rel
 	}
 }
 
-// Charge le plan
+/**
+ * Charge le plan
+ * @return
+ */
+
 public Map<Ligne,ArrayList<Station>> GetPlan(){
 	try{
 			
@@ -264,7 +346,12 @@ public Map<Ligne,ArrayList<Station>> GetPlan(){
 	}
 }
 
-// Change la map pass� en param�tre en une map reliant Ligne � des Stations
+/**
+ * Change la map passé en paramétre en une map reliant Ligne à des Stations
+ * @param map
+ * @return
+ */
+
 private Map<Ligne,ArrayList<Station>> GetPlanToTripMap(Map<String,ArrayList<Station>> map){
 	if(map == null)
 		return null;
@@ -281,6 +368,12 @@ private Map<Ligne,ArrayList<Station>> GetPlanToTripMap(Map<String,ArrayList<Stat
 	
 	return mapSt;
 }
+
+/**
+ * Récupère route par son identifiant de voyage
+ * @param trip_id
+ * @return
+ */
 
 private Map<String,Ligne> GetRoutesByTripsId(Set<String> trip_id){
 	try{
@@ -319,6 +412,12 @@ private Map<String,Ligne> GetRoutesByTripsId(Set<String> trip_id){
 		return null;
 	}
 }
+
+/**
+ * Exécution des requet sql
+ * @param request
+ * @return
+ */
 
 private static ResultSet Execquery(String request) {
     ResultSet resultat = null;
