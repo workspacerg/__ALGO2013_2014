@@ -1,7 +1,5 @@
 package algo_ratp;
 
-import java.sql.Time;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Station implements Comparable<Station> {

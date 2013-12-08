@@ -12,7 +12,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -29,7 +28,6 @@ private DALProvider()
 private static DALProvider INSTANCE = null;
 private final static long ONE_MINUTE_IN_MILLIS = 60000;
 
-//private String DBPath = "localhost/dataratp";
 private String DBPath;
 private String username;
 private String password;
