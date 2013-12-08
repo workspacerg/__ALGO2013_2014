@@ -39,6 +39,7 @@ public class IHM_search extends IHM_RATP implements ActionListener
 	
 	private UserControl_Search jList_Departure = new UserControl_Search(AutoCpltMod_Data,txt_Departure);
 	private UserControl_Search jList_Arrival = new UserControl_Search(AutoCpltMod_Data,txt_Arrival);
+	private JLabel jLab_Connection = new JLabel();
 	
 	public IHM_search()
 	{
@@ -54,10 +55,8 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		//ajout pr le label en plus
 		
 		JPanel jPan4c = new JPanel();
-        jPan4c.setBackground(Color.WHITE);
-        jPan4c.setBorder(BorderFactory.createMatteBorder(3, 5, 3, 5, Color.BLACK));
         jPan4c.setPreferredSize(new Dimension(405,32));
-        jPan4c.add(new JLabel("AJOUTE TON TEXT RAYANE"));
+        jPan4c.add(jLab_Connection);
 		gBC_gBLay_Level_2.gridx = 0;
 		gBC_gBLay_Level_2.gridy = 0;
 		gBC_gBLay_Level_2.gridwidth = 2;
