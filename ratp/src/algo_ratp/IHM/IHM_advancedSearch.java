@@ -9,15 +9,27 @@ import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.SignatureException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.text.SimpleAttributeSet;
 
+import algo_ratp.DALProvider;
+import algo_ratp.Dijkstra;
+import algo_ratp.Relation;
+import algo_ratp.Station;
 import algo_ratp.IHM.tools.UserControl_Search;
 
 
@@ -32,6 +44,9 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 	
 	private JLabel jLab_Departure = new JLabel("Départ: ");
 	private JLabel jLab_Arrival = new JLabel("Arrivée : ");
+	
+	private UserControl_Search jList_Departure = new UserControl_Search(AutoCpltMod_Data,txt_Departure);
+	private UserControl_Search jList_Arrival = new UserControl_Search(AutoCpltMod_Data,txt_Arrival);
 	
 	private JComboBox combo = new JComboBox();
 	private JComboBox comboHour = new JComboBox();
@@ -82,7 +97,7 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
         gBC_gBLay_Level_2.gridheight = 1;
         gBC_gBLay_Level_2.anchor = GridBagConstraints.LINE_START;
         gBC_gBLay_Level_2.insets = new Insets(2, 2, 2, 2);
-        jPan4.add(new UserControl_Search(AutoCpltMod_Data,txt_Departure), gBC_gBLay_Level_2);
+        jPan4.add(jList_Departure, gBC_gBLay_Level_2);
         
         JPanel jPan4b = new JPanel();
         jPan4b.setBackground(Color.WHITE);
@@ -103,7 +118,7 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
         gBC_gBLay_Level_2.gridheight = 1;
         gBC_gBLay_Level_2.fill=GridBagConstraints.REMAINDER;
         gBC_gBLay_Level_2.insets = new Insets(2, 2, 2, 2);
-        jPan4.add(new UserControl_Search(AutoCpltMod_Data,txt_Arrival), gBC_gBLay_Level_2);
+        jPan4.add(jList_Arrival, gBC_gBLay_Level_2);
         
         
         combo.setPreferredSize(new Dimension(80,25));
@@ -207,8 +222,28 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 		}
 		if(e.getSource()==this.jBt_FindRoad)
 		{
+			if(comboHour.getSelectedItem() == null || comboMinute.getSelectedItem() == null){
+				JOptionPane.showMessageDialog (this,"Veuillez renseigner une heure","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
+				return;
+			}
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+			
+			Date d;
+			LinkedHashMap<Relation, Date> map = new LinkedHashMap<Relation, Date>();
+			try {
+				d = sdf.parse(comboHour.getSelectedItem().toString().replace("h","") + ":" + comboMinute.getSelectedItem().toString());
+				Dijkstra.execute((Station)jList_Departure.getList().getSelectedValue());
+				LinkedList<Relation> res = Dijkstra.getPath((Station)jList_Arrival.getList().getSelectedValue());
+				
+				DALProvider.getInstance().connect();
+				map = DALProvider.getInstance().GetRealPathWithTime(res, d);
+				DALProvider.getInstance().close();
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+			}
+			
 			this.dispose();
-			//IHM_result result=new IHM_result();
+			IHM_result result=new IHM_result(map);
 		}
 		
 	}

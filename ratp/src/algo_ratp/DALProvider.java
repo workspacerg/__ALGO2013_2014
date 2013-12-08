@@ -212,10 +212,7 @@ public LinkedHashMap<Relation,Date> GetRealPathWithTime(LinkedList<Relation> rel
 		}
 			
 			map.put(current, new Date(temp.getTime() + Plan.getInstance().getDistanceBetween(last.getLigne(), current.getTarget(), last.getTarget())*  ONE_MINUTE_IN_MILLIS));
-		
-		for(Entry<Relation,Date> ent: map.entrySet())
-			System.out.println(ent.getKey().getTarget().getName() + " -->" + ent.getKey().getLigne().getShort_name()+"--->" + ent.getValue());
-		
+				
 		return map;
 	}
 	catch(Exception exp){

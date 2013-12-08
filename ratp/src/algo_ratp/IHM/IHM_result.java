@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -51,16 +52,47 @@ public class IHM_result extends IHM_RATP implements ActionListener
 	    
 		
 		int i = 0;
+		int j = 0;
 		Entry<Relation,Date> previous = null;
+		Calendar calendar = Calendar.getInstance();
+		
 		for(Entry<Relation,Date> ent : mapResults.entrySet())
 	    {
 			if(previous == null){
+			    JPanel jp = createJPanel(Color.WHITE, true);		       
+			    jp = defineJPanelLayoutManager(jp);
+			    calendar.setTime(ent.getValue());
+			    jp=addElement(new String[]{"Départ à "+String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))},jp);
+			    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
+			    gBC_gBLay_Level_2.gridx = 0;
+			    gBC_gBLay_Level_2.gridy = i++;
+				gBC_gBLay_Level_2.gridwidth = 5;
+				gBC_gBLay_Level_2.gridheight = 1;
+				gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
+				gBC_gBLay_Level_2.insets = new Insets(4, 0, 4, 0);
+				jPan4.add(jp, gBC_gBLay_Level_2);
 				previous = ent;
 				continue;
 			}
 			
-			PicturesTools icone_wayOfTravel = new PicturesTools();
-			String[] s = new String[]{"    "+previous.getKey().getTarget().getName()+" jusqu'à "+ent.getKey().getTarget().getName()+" -",(ent.getValue().getTime() - previous.getValue().getTime() * 60000)+ "min"};
+			int nbWalk = previous.getKey().getLigne().getTypeTransport().equals(algo_ratp.Type.Metro) ? 4 : 7;
+			
+			if(j>0){
+				JPanel jp2 = createJPanel(Color.GRAY,true);
+				jp2 = defineJPanelLayoutManager(jp2);
+				jp2 = addElement(new String[]{"Marche à pied "+nbWalk+"min"},jp2);
+				gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
+			    gBC_gBLay_Level_2.gridx = 0;
+			    gBC_gBLay_Level_2.gridy = i++;
+				gBC_gBLay_Level_2.gridwidth = 5;
+				gBC_gBLay_Level_2.gridheight = 1;
+				gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
+				gBC_gBLay_Level_2.insets = new Insets(4, 0, 4, 0);
+				jPan4.add(jp2, gBC_gBLay_Level_2);
+			}
+					
+			PicturesTools icone_wayOfTravel = new PicturesTools();			
+			String[] s = new String[]{"    "+previous.getKey().getTarget().getName()+" jusqu'à "+ent.getKey().getTarget().getName()+"      " + (((ent.getValue().getTime() - previous.getValue().getTime()) / 60000) - nbWalk)+ "min"};
 
 			String ligne_sn = previous.getKey().getLigne().getShort_name().toUpperCase();
 			icone_wayOfTravel.setFichierImage( PicturesTools.createFichierImage(System.getProperty("user.dir" ).toString()+"\\image\\",ligne_sn+".jpg")); 
@@ -68,7 +100,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			
 		    JPanel jp = createJPanel(Color.WHITE, true);		       
 		    jp = defineJPanelLayoutManager(jp);
-		    jp.add(icone_wayOfTravel);
+		    jp.add(icone_wayOfTravel,BorderLayout.WEST);
 		    jp=addElement(s,jp);
 		    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
 		    gBC_gBLay_Level_2.gridx = 0;
@@ -80,8 +112,21 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			jPan4.add(jp, gBC_gBLay_Level_2);
 			previous = ent;
 			i++;
+			j++;
 	    }
 		
+		JPanel jp = createJPanel(Color.WHITE, true);		       
+	    jp = defineJPanelLayoutManager(jp);
+	    calendar.setTime(previous.getValue());
+	    jp=addElement(new String[]{"Arrivée à "+String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))},jp);
+	    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
+	    gBC_gBLay_Level_2.gridx = 0;
+	    gBC_gBLay_Level_2.gridy = i++;
+		gBC_gBLay_Level_2.gridwidth = 5;
+		gBC_gBLay_Level_2.gridheight = 1;
+		gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
+		gBC_gBLay_Level_2.insets = new Insets(4, 0, 4, 0);
+		jPan4.add(jp, gBC_gBLay_Level_2);
 		
 		ActionListenerForComponent(this.getContentPane());
 		
@@ -162,7 +207,6 @@ public class IHM_result extends IHM_RATP implements ActionListener
 	private JLabel createJLabel(String s) //trouver solution indexer bt ou les nommer
 	{
 		JLabel l = new JLabel(s);
-		//l.setBorder(BorderFactory.createMatteBorder(3, 5, 3, 5, Color.BLACK));
 		l.setHorizontalAlignment(JLabel.CENTER);
 		 return l;
 	}
@@ -198,14 +242,10 @@ public class IHM_result extends IHM_RATP implements ActionListener
 	private JPanel addElement(String[] s, JPanel jp)
 	{
 		if(s.length>2)
-		{
 			return jp;
-		}
-		int i = 0;
-		for(i=0;i<s.length;i++)
-		{
+
+		for(int i=0;i<s.length;i++)
 			jp.add(createJLabel(s[i].toString()));
-		}
 		return jp;
 	}
 }
