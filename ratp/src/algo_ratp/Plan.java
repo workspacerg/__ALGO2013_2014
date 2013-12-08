@@ -11,6 +11,11 @@ public class Plan {
 	private Map<Station,ArrayList<Relation>> relations;
 	private Map<Station,Station> avoidRelation;
 	
+	/**
+	 * 
+	 * @return Renvoie le plan des Lignes 
+	 */
+	
 	public Map<Ligne, ArrayList<Station>> getPlan() {
 		if(plan == null){
 			plan = new HashMap<Ligne,ArrayList<Station>>();
@@ -23,9 +28,19 @@ public class Plan {
 		return plan;
 	}
 	
+	/**
+	 * Récupère un tableau de relation assscocié aux stations
+	 * @return
+	 */
+	
 	public Map<Station,ArrayList<Relation>> getRelations(){
 		return relations;
 	}
+	
+	/**
+	 * Mise à jour du plan
+	 * @param plan
+	 */
 
 	public void setPlan(Map<Ligne, ArrayList<Station>> plan) {
 		this.plan = plan;
@@ -33,10 +48,19 @@ public class Plan {
 
 	private static Plan INSTANCE = null;
 	
+	/**
+	 * Constructeur par default 
+	 */
+	
 	private Plan() {
 		super();
 		relations = new HashMap<Station,ArrayList<Relation>>();
 	}
+	
+	/**
+	 * Récuparation de l'instance de la carte
+	 * @return
+	 */
 	
 	public static Plan getInstance(){
 		if (INSTANCE == null)
@@ -46,6 +70,14 @@ public class Plan {
 		
 		return INSTANCE;
 	}
+	
+	/**
+	 * Recupère une liste des stations 
+	 * Si null 
+	 * 	> Renvoie un tableau vide
+	 * 	
+	 * @return 
+	 */
 	
 	public ArrayList<Station> GetStations(){
 		if(this.plan == null)
@@ -80,7 +112,16 @@ public class Plan {
 		return lignes;
 	}
 	
-	//Le comparateur de Station se fait sur le nom, il suffit juste de créer une station avec le nom que l'on cherche ( pas besoin des autres attributs )
+	/**
+	 * Le comparateur de Station se fait sur le nom, 
+	 * il suffit juste de créer une station avec le nom que l'on cherche ( pas besoin des autres attributs )
+	 * 
+	 * @param ligne
+	 * @param station
+	 * @return la ligne pour une station donnée en paramètre
+	 * 			> Sinon renvoie null
+	 */
+	
 	public Ligne GetLigneByNameAndStation(String ligne,String station){
 		if(this.plan == null)
 			return null;
@@ -97,6 +138,10 @@ public class Plan {
 		return null;
 	}
 	
+	/**
+	 * 
+	 */
+	
 	private void loadAdjencies(){
 		for(Entry<Ligne,ArrayList<Station>> ent : this.plan.entrySet()){
 			ArrayList<Station> sts = ent.getValue();
@@ -106,6 +151,11 @@ public class Plan {
 		}
 		
 	}
+	
+	/**
+	 * Charge les relations
+	 * @param 
+	 */
 	
 	private void loadRelation(Station sta){
 		Map<Station,LigneCorrespondance> map = Correspondance.getInstance().getMapLigne();
@@ -132,6 +182,12 @@ public class Plan {
 		}
 	}
 	
+	/**
+	 * Vérifie qu'une relation existe avec la station 
+	 * @param st
+	 * @param r
+	 */
+	
 	private void checkExist(Station st,Relation r){
 		if(this.avoidRelation.get(st) != null){
 			if(r.getTarget().equals(this.avoidRelation.get(st))){
@@ -152,7 +208,16 @@ public class Plan {
 		}
 	}
 	
-	// Faite de fonction à calculer la distance dans n'importe quel sens
+	/**
+	 * Recupère la distance entre deux stations sur une ligne
+	 * Calculer la distance dans n'importe quel sens
+	 * 
+	 * @param ligne
+	 * @param start
+	 * @param end
+	 * @return distance
+	 */
+	
 	public int getDistanceBetween(Ligne ligne,Station start,Station end){
 		if(this.plan == null || this.relations == null || start.equals(end))
 			return 0;
@@ -176,6 +241,12 @@ public class Plan {
 		return distance;
 		
 	}
+	
+	/**
+	 * 
+	 * Charger liste des correspondances
+	 * 
+	 */
 				
 	private void loadCorrespondances(){
 		Map<Station,LigneCorrespondance> mapCorresp = new HashMap<Station,LigneCorrespondance>();
@@ -197,6 +268,11 @@ public class Plan {
 		
 		Correspondance.getInstance().getMapLigne().putAll(mapCorresp);
 	}
+	
+	/**
+	 * Charge le plan 
+	 * @see DALProvider
+	 */
 	
 	private void loadPlan(){
 		DALProvider.getInstance().connect();

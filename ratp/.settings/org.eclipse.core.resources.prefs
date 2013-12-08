@@ -1,3 +1,8 @@
 eclipse.preferences.version=1
+encoding//src/algo_ratp/ComparatorStation.java=UTF-8
+encoding//src/algo_ratp/Correspondance.java=UTF-8
+encoding//src/algo_ratp/DALProvider.java=UTF-8
+encoding//src/algo_ratp/Ligne.java=UTF-8
 encoding//src/algo_ratp/Plan.java=UTF-8
+encoding//src/algo_ratp/Station.java=UTF-8
 encoding//src/algo_ratp/Type.java=UTF-8
