@@ -23,6 +23,16 @@ public class Plan {
 		return plan;
 	}
 	
+	public void backToSvg(){
+		for(Entry<Ligne,ArrayList<Station>> ent : plan.entrySet()){
+			for(Station s : ent.getValue())
+			{
+				s.setMinDistance(Integer.MAX_VALUE);
+				s.setPrevious(null);
+			}
+		}
+	}
+	
 	public Map<Station,ArrayList<Relation>> getRelations(){
 		return relations;
 	}

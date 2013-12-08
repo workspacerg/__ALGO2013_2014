@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
+import algo_ratp.Plan;
 import algo_ratp.Relation;
 import algo_ratp.IHM.tools.PicturesTools;
 
@@ -129,7 +130,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 		jPan4.add(jp, gBC_gBLay_Level_2);
 		
 		ActionListenerForComponent(this.getContentPane());
-		
+		Plan.getInstance().backToSvg();
 		this.setVisible(true);
 	}
 	
@@ -186,7 +187,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 		
 		
 		ActionListenerForComponent(this.getContentPane());
-		
+		Plan.getInstance().backToSvg();
 		this.setVisible(true);
 	}
 	

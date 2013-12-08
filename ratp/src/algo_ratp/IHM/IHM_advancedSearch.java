@@ -28,6 +28,7 @@ import javax.swing.text.SimpleAttributeSet;
 
 import algo_ratp.DALProvider;
 import algo_ratp.Dijkstra;
+import algo_ratp.Plan;
 import algo_ratp.Relation;
 import algo_ratp.Station;
 import algo_ratp.IHM.tools.UserControl_Search;
@@ -63,7 +64,7 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 		jPan3.add(jBt_Back);
 		
 		//ajout pr le label en plus
-		jLab_Connection.setText(DALProvider.getInstance().isAuth() ? "Connecté à "+DALProvider.getInstance().getDbPath() : "Vous n'êtes pas connecté.");
+		jLab_Connection.setText(DALProvider.getInstance().isAuth() ? "Connecté à "+DALProvider.getInstance().getDbPath() : "Vous n'êtes pas connecté à une base de données.");
 		JPanel jPan4z = new JPanel();
 		jPan4z.setBackground(Color.WHITE);
 		jPan4z.setBorder(BorderFactory.createMatteBorder(3, 5, 3, 5, Color.BLACK));
@@ -210,7 +211,7 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 		jBt_FindRoad.setFont(police);
 		jBt_Back.setFont(police);
 		ActionListenerForComponent(this.getContentPane());
-		
+		Plan.getInstance().backToSvg();
 		this.setVisible(true);
 	}
 	

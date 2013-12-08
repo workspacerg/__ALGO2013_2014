@@ -40,7 +40,6 @@ public class UserControl_Search extends JPanel
 
 		results.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {
-		    	System.out.println("ok");
 		        if (evt.getClickCount() == 2) {
 		        	zoneText.setText(results.getSelectedValue().toString());
 					windowSearch.setVisible(false);

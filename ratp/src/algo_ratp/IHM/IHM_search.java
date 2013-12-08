@@ -55,7 +55,7 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		
 		
 		//ajout pr le label en plus
-		jLab_Connection.setText(DALProvider.getInstance().isAuth() ? "Connecté à "+DALProvider.getInstance().getDbPath() : "Vous n'êtes pas connecté.");
+		jLab_Connection.setText(DALProvider.getInstance().isAuth() ? "Connecté à "+DALProvider.getInstance().getDbPath() : "Vous n'êtes pas connecté à une base de données.");
 		JPanel jPan4c = new JPanel();
         jPan4c.setPreferredSize(new Dimension(405,32));
         jPan4c.add(jLab_Connection);
@@ -132,6 +132,10 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		jBt_AdvancedSearch.setFont(police);
 		jBt_Exit.setFont(police);
 		
+		if(!DALProvider.getInstance().isAuth()){
+			txt_Arrival.setEnabled(false);
+			txt_Departure.setEnabled(false);
+		}
 		ActionListenerForComponent(this.getContentPane());
 		
 		this.setVisible(true);

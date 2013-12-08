@@ -107,9 +107,10 @@ public class Dijkstra {
 	  }
 	
     private static Relation GetRelationFromSource(Station source,Station target){
-    	for(Relation r : Plan.getInstance().getRelations().get(source))
+    	for(Relation r : Plan.getInstance().getRelations().get(source)){
     		if(r.getTarget().equals(target))
     			return r;
+    	}
     	// On est pas censé arrivé jusqu'ici
     	return null;
     }
@@ -119,7 +120,7 @@ public class Dijkstra {
 			if(r.getTarget().equals(target.getTarget())){
 				if(node.getLigne() != null){
 				 	if(!node.getLigne().getShort_name().equalsIgnoreCase(r.getLigne().getShort_name())){
-				 		// On fait ca manuellement pour l'instant
+				 		// + temps de marche 
 				 		return r.getLigne().getTypeTransport().equals(Type.Metro) ? r.getWeight() + 4 : r.getWeight() + 7;
 				 	}
 				}

@@ -12,7 +12,10 @@ import java.awt.GridBagLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,6 +29,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import algo_ratp.DALProvider;
+import algo_ratp.Ligne;
 import algo_ratp.Plan;
 import algo_ratp.Station;
 import algo_ratp.IHM.tools.AutoCompleteModel;
@@ -117,7 +121,6 @@ public class IHM_RATP extends JFrame implements ActionListener
 	public AutoCompleteModel initAutoCompleteMod()
 	{	
 		AutoCompleteModel acm = new AutoCompleteModel();
-		ArrayList<Station> ar = new ArrayList<Station>();
 		
 		if(DALProvider.getInstance().isAuth()){
 			Plan.getInstance().getPlan();
