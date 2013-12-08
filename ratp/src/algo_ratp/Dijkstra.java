@@ -3,6 +3,7 @@ package algo_ratp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -53,6 +54,40 @@ public class Dijkstra {
 	    
 	    return neighbors;
 	 }
+	
+	public static LinkedList<Relation> getRealPath(LinkedList<Relation> relations){
+		try{
+			if(relations == null)
+				return null;
+			
+			LinkedList<Relation> rel = new LinkedList<Relation>();
+			Ligne current = new Ligne();
+			int i = 0;
+			
+			for(Relation r : relations){
+				if(i==0){
+					rel.add(r);
+					current = r.getLigne();
+					i++;
+					continue;
+				}
+				
+				if(!r.getLigne().equals(current)){
+					rel.add(r);
+					current = r.getLigne();
+				}
+				else if(r.equals(relations.getLast())){
+					rel.add(r);
+				}
+			}
+			
+			return rel;
+		}
+		catch(Exception exp){
+			exp.printStackTrace();
+			return null;
+		}
+	}
 	
     public static LinkedList<Relation> getPath(Station target) {
 	    LinkedList<Relation> path = new LinkedList<Relation>();

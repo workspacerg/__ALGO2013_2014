@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import algo_ratp.DALProvider;
 import algo_ratp.Plan;
 import algo_ratp.Station;
 import algo_ratp.IHM.tools.AutoCompleteModel;
@@ -118,15 +119,10 @@ public class IHM_RATP extends JFrame implements ActionListener
 		AutoCompleteModel acm = new AutoCompleteModel();
 		ArrayList<Station> ar = new ArrayList<Station>();
 		
-		//EXEMPLE TEMPORAIRE EN DUR======================
-		ar.add(new Station("Bonjour",""));
-		ar.add(new Station("Ok",""));
-		ar.add(new Station("SDFKOISDF",""));
-		ar.add(new Station("sdf",""));
-		ar.add(new Station("dsklfjsdfklsdf",""));
-		ar.add(new Station("gjkhjk",""));
-		acm.addAll(Plan.getInstance().GetStations());
-		//EXEMPLE TEMPORAIRE EN DUR======================
+		if(DALProvider.getInstance().isAuth()){
+			Plan.getInstance().getPlan();
+			acm.addAll(Plan.getInstance().GetStations());
+		}
 		
 		return acm;
 	}

@@ -208,7 +208,7 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 		if(e.getSource()==this.jBt_FindRoad)
 		{
 			this.dispose();
-			IHM_result result=new IHM_result();
+			//IHM_result result=new IHM_result();
 		}
 		
 	}

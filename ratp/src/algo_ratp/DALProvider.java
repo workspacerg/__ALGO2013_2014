@@ -46,6 +46,10 @@ public static DALProvider getInstance()
 	return INSTANCE;
 }
 
+public String getDbPath(){
+	return DBPath;
+}
+
 public boolean isAuth(){
 	return this.isAuthentified;
 }

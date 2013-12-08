@@ -1,5 +1,6 @@
 package algo_ratp.IHM;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -7,6 +8,10 @@ import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,15 +21,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
 
+import algo_ratp.Relation;
 import algo_ratp.IHM.tools.PicturesTools;
 
 public class IHM_result extends IHM_RATP implements ActionListener
 {
 	private JButton jBt_SearchModification = new JButton("Modifier recherche"); 
 	private JButton jBt_Exit = new JButton("Exit");
+	private LinkedHashMap<Relation,Date> mapResults;
+	private LinkedList<Relation> listRel;
 	
-	public IHM_result() 
+	public IHM_result(LinkedHashMap<Relation,Date> map) 
 	{
+		mapResults = map;
 		this.jLab_Welcome.setText("Résultat de la recherche");
 		this.setTitle("MyTraject - Itinéraire");
 		
@@ -41,15 +50,21 @@ public class IHM_result extends IHM_RATP implements ActionListener
 	    jPan1.add(jScrollPane);
 	    
 		
-		int i=0;
-	    int numberOfTransport = 8; //exemple 8 en dur pr l'instant
-		for(i=1 ;i<numberOfTransport ;i++)
+		int i = 0;
+		Entry<Relation,Date> previous = null;
+		for(Entry<Relation,Date> ent : mapResults.entrySet())
 	    {
+			if(previous == null){
+				previous = ent;
+				continue;
+			}
+			
 			PicturesTools icone_wayOfTravel = new PicturesTools();
-			String[] s = new String[]{"    STATION1 jusqu'à STATION2 - ","temps de parcours.    "};//Sera un parametre du model via le controlleur
+			String[] s = new String[]{"    "+previous.getKey().getTarget().getName()+" jusqu'à "+ent.getKey().getTarget().getName()+" -",(ent.getValue().getTime() - previous.getValue().getTime() * 60000)+ "min"};
 
-			icone_wayOfTravel.setFichierImage( PicturesTools.createFichierImage(System.getProperty("user.dir" ).toString()+"\\image\\","ratp.jpg")); // "ratp.jpg"==>mettre une variable
-			icone_wayOfTravel.setPreferredSize(new Dimension(59,46));
+			String ligne_sn = previous.getKey().getLigne().getShort_name().toUpperCase();
+			icone_wayOfTravel.setFichierImage( PicturesTools.createFichierImage(System.getProperty("user.dir" ).toString()+"\\image\\",ligne_sn+".jpg")); 
+			icone_wayOfTravel.setPreferredSize(new Dimension(45,45));
 			
 		    JPanel jp = createJPanel(Color.WHITE, true);		       
 		    jp = defineJPanelLayoutManager(jp);
@@ -63,6 +78,65 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
 			gBC_gBLay_Level_2.insets = new Insets(4, 0, 4, 0);
 			jPan4.add(jp, gBC_gBLay_Level_2);
+			previous = ent;
+			i++;
+	    }
+		
+		
+		ActionListenerForComponent(this.getContentPane());
+		
+		this.setVisible(true);
+	}
+	
+	public IHM_result(LinkedList<Relation> list) 
+	{
+		listRel = list;
+		this.jLab_Welcome.setText("Résultat de la recherche");
+		this.setTitle("MyTraject - Itinéraire");
+		
+		jPan3.add(jBt_SearchModification);
+		jPan3.add(jBt_Exit);
+		
+		//*****************
+		
+		JScrollPane jScrollPane = new JScrollPane(jPan4);
+		//jScrollPane.getViewport().add(jPan4, null);
+		jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	    jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	    jScrollPane.setViewportBorder(new LineBorder(Color.BLACK));
+	    jPan1.add(jScrollPane);
+	    
+		
+		int i = 0;
+		Relation previous = null;
+		for(Relation rel : listRel)
+	    {
+			if(previous == null){
+				previous = rel;
+				continue;
+			}
+			
+			PicturesTools icone_wayOfTravel = new PicturesTools();
+			String[] s = new String[]{"    "+previous.getTarget().getName()+" jusqu'à "+rel.getTarget().getName()};
+			
+			String ligne_sn = previous.getLigne().getShort_name().toUpperCase();
+			icone_wayOfTravel.setFichierImage( PicturesTools.createFichierImage(System.getProperty("user.dir" ).toString()+"\\image\\",ligne_sn+".jpg"));
+			icone_wayOfTravel.setPreferredSize(new Dimension(45,45));
+			
+		    JPanel jp = createJPanel(Color.WHITE, true);		       
+		    jp = defineJPanelLayoutManager(jp);
+		    jp.add(icone_wayOfTravel,BorderLayout.WEST);
+		    jp=addElement(s,jp);
+		    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
+		    gBC_gBLay_Level_2.gridx = 0;
+		    gBC_gBLay_Level_2.gridy = i;
+			gBC_gBLay_Level_2.gridwidth = 5;
+			gBC_gBLay_Level_2.gridheight = 1;
+			gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
+			gBC_gBLay_Level_2.insets = new Insets(4, 0, 4, 0);
+			jPan4.add(jp, gBC_gBLay_Level_2);
+			previous = rel;
+			i++;
 	    }
 		
 		
@@ -108,7 +182,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 		jp.setBorder(BorderFactory.createMatteBorder(3, 5, 3, 5, Color.BLACK));
 		if(autoSize)
 	    {
-			//jp.setMaximumSize(new Dimension(480,30));
+			//jp.setPreferredSize(new Dimension(480,30));
 			jp.setMinimumSize(new Dimension(480,30));
 	    	//jp.setPreferredSize(new Dimension(480,30));
 	    }
@@ -117,8 +191,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 	
 	private JPanel defineJPanelLayoutManager(JPanel jp) 
 	{
-		BoxLayout bxLay_buttonGroup = new BoxLayout(jp,BoxLayout.X_AXIS);
-		jp.setLayout(bxLay_buttonGroup);
+		jp.setLayout(new BorderLayout());
 		return jp;
 	}
 	

@@ -7,6 +7,8 @@ import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
@@ -53,7 +55,7 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		
 		
 		//ajout pr le label en plus
-		
+		jLab_Connection.setText(DALProvider.getInstance().isAuth() ? "Connecté à "+DALProvider.getInstance().getDbPath() : "Vous n'êtes pas connecté.");
 		JPanel jPan4c = new JPanel();
         jPan4c.setPreferredSize(new Dimension(405,32));
         jPan4c.add(jLab_Connection);
@@ -163,10 +165,16 @@ public class IHM_search extends IHM_RATP implements ActionListener
 			}
 			else
 			{
-				Dijkstra.execute((Station)jList_Departure.getList().getSelectedValue());
-				LinkedList<Relation> relations = Dijkstra.getPath((Station)jList_Arrival.getList().getSelectedValue());
-				this.dispose();
-				IHM_result result=new IHM_result();
+				if(jList_Departure.getList().getSelectedValue() != null && jList_Arrival.getList().getSelectedValue() != null){
+					Dijkstra.execute((Station)jList_Departure.getList().getSelectedValue());
+					LinkedList<Relation> relations = Dijkstra.getPath((Station)jList_Arrival.getList().getSelectedValue());
+					this.dispose();
+					IHM_result result=new IHM_result(Dijkstra.getRealPath(relations));
+				}
+				else
+				{
+					JOptionPane.showMessageDialog (this,"Veuillez séléctionner le chemin à trouver.","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
+				}
 			}			
 		}
 		if(e.getSource()==this.jBt_Exit)
