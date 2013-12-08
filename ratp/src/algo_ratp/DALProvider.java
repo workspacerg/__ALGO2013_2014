@@ -113,7 +113,7 @@ public void close(){
 private String GetTripIdToPlan(){
 	try{
 		StringBuilder sb = new StringBuilder();
-		String requete = "SELECT TRIP_id from stop_time group by trip_id having count(*) > 1";
+		String requete = "SELECT trip_id from STOP_TIME group by trip_id having count(*) > 1";
 			
 			
 		ResultSet result = Execquery(requete);
@@ -170,7 +170,7 @@ public Date GetNextTime(Ligne l,Station s,Date departTime){
 		calendar.setTime(departTime);
 		
 		// Le depart depuis ma station, le plus proche de l'heure entrée
-		String requete = "SELECT ADDTIME(departure_time,SEC_TO_TIME("+distance+"*60)) AS date FROM stop_time st,trips t " +
+		String requete = "SELECT ADDTIME(departure_time,SEC_TO_TIME("+distance+"*60)) AS date FROM STOP_TIME st,TRIPS t " +
 				"WHERE t.trip_id = st.trip_id AND route_id = '"+l.getId_route()+"' " +
 				"AND departure_time > ADDTIME(STR_TO_DATE('"+calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE)+"','%H:%i'),-SEC_TO_TIME("+distance+"*60)) " +
 				"ORDER BY DEPARTURE_TIME LIMIT 1";
@@ -295,7 +295,7 @@ private Map<String,Ligne> GetRoutesByTripsId(Set<String> trip_id){
 		
 		Map<String,Ligne> mapLi = new HashMap<String,Ligne>();
 		
-		String requete = "SELECT r.route_id,route_short_name,route_long_name,route_type,route_color,t.trip_id from trips t,route r " +
+		String requete = "SELECT r.route_id,route_short_name,route_long_name,route_type,route_color,t.trip_id from TRIPS t,ROUTE r " +
 				" WHERE r.route_id = t.route_id AND t.trip_id IN ("+sb.toString()+")";
 						
 		ResultSet result = Execquery(requete);

@@ -52,6 +52,8 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 	private JComboBox comboHour = new JComboBox();
 	private JComboBox comboMinute = new JComboBox();
 	
+	private JLabel jLab_Connection = new JLabel();
+	
 	public IHM_advancedSearch()
 	{
 		this.jLab_Welcome.setText("Bienvenue sur MyTraject");
@@ -61,12 +63,12 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 		jPan3.add(jBt_Back);
 		
 		//ajout pr le label en plus
-		
+		jLab_Connection.setText(DALProvider.getInstance().isAuth() ? "Connecté à "+DALProvider.getInstance().getDbPath() : "Vous n'êtes pas connecté.");
 		JPanel jPan4z = new JPanel();
 		jPan4z.setBackground(Color.WHITE);
 		jPan4z.setBorder(BorderFactory.createMatteBorder(3, 5, 3, 5, Color.BLACK));
 		jPan4z.setPreferredSize(new Dimension(405,32));
-		jPan4z.add(new JLabel("AJOUTE TON TEXT RAYANE"));
+		jPan4z.add(jLab_Connection);
 		gBC_gBLay_Level_2.gridx = 0;
 		gBC_gBLay_Level_2.gridy = 0;
 		gBC_gBLay_Level_2.gridwidth = 2;
