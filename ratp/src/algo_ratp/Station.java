@@ -43,6 +43,10 @@ public class Station implements Comparable<Station> {
 		setArrival(_arrival);
 	}
 	
+	public String toString(){
+		return this.name;
+	}
+	
 	public int getSequence() {
 		return sequence;
 	}

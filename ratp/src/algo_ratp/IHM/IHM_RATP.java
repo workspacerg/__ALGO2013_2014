@@ -25,6 +25,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import algo_ratp.Plan;
+import algo_ratp.Station;
 import algo_ratp.IHM.tools.AutoCompleteModel;
 import algo_ratp.IHM.tools.PicturesTools;
 
@@ -114,19 +116,16 @@ public class IHM_RATP extends JFrame implements ActionListener
 	public AutoCompleteModel initAutoCompleteMod()
 	{	
 		AutoCompleteModel acm = new AutoCompleteModel();
-		ArrayList<String> ar = new ArrayList<String>();
+		ArrayList<Station> ar = new ArrayList<Station>();
 		
 		//EXEMPLE TEMPORAIRE EN DUR======================
-		ar.add("Bonjour");
-		ar.add("Ok");
-		ar.add("SDFKOISDF");
-		ar.add("sdf");
-		ar.add("dsklfjsdfklsdf");
-		ar.add("sf");
-		ar.add("uikhj");
-		ar.add("hjgh");
-		ar.add("gjkhjk");
-		acm.addAll(ar);
+		ar.add(new Station("Bonjour",""));
+		ar.add(new Station("Ok",""));
+		ar.add(new Station("SDFKOISDF",""));
+		ar.add(new Station("sdf",""));
+		ar.add(new Station("dsklfjsdfklsdf",""));
+		ar.add(new Station("gjkhjk",""));
+		acm.addAll(Plan.getInstance().GetStations());
 		//EXEMPLE TEMPORAIRE EN DUR======================
 		
 		return acm;

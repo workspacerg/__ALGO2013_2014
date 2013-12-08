@@ -27,11 +27,14 @@ private DALProvider()
 }
  
 private static DALProvider INSTANCE = null;
-private final static String DBPath = "localhost/dataratp";
-private long ONE_MINUTE_IN_MILLIS = 60000;
+private final static long ONE_MINUTE_IN_MILLIS = 60000;
+
+//private String DBPath = "localhost/dataratp";
+private String DBPath;
 private String username;
 private String password;
 private static Connection connection;
+private boolean isAuthentified = false;
  
 /** Point d'accès pour l'instance unique du singleton */
 public static DALProvider getInstance()
@@ -43,9 +46,24 @@ public static DALProvider getInstance()
 	return INSTANCE;
 }
 
-public void initIdentifiers(String userN,String password){
-	this.username = userN;
-	this.password = password;
+public boolean isAuth(){
+	return this.isAuthentified;
+}
+
+public boolean initIdentifiers(String userN,String password,String dbPath){
+	return (isAuthentified = tryConnect(userN,password,dbPath));
+}
+
+public boolean tryConnect(String user,String passwd,String db){
+	this.username = user;
+	this.password = passwd;
+	this.DBPath = db;
+	if(!connect()){
+		this.username = this.password = this.DBPath = null;
+		return false;
+	}
+	return true;
+	
 }
 
 public boolean connect() { 
@@ -174,24 +192,22 @@ public LinkedHashMap<Relation,Date> GetRealPathWithTime(LinkedList<Relation> rel
 		else
 			map.put(relations.getFirst(), GetNextTime(relations.getFirst().getLigne(),relations.getFirst().getTarget(),depart));
 		
-		Relation r = relations.getFirst();
-		Relation r2 = relations.getFirst();
+		Relation current = relations.getFirst();
+		Relation last = relations.getFirst();
 		int distance;
 			
-		while(!(r = GetNextChange(relations, r)).equals(relations.getLast())){
-			distance = Plan.getInstance().getDistanceBetween(r2.getLigne(), r.getTarget(), r2.getTarget());
-			System.out.println(temp);
-			if(r.getLigne().getTypeTransport().equals(Type.Metro)){
-				map.put(r, (temp = new Date(temp.getTime() + (distance+4) * ONE_MINUTE_IN_MILLIS)));
-			}
-			else{
-				map.put(r, GetNextTime(r.getLigne(),r.getTarget(),(temp = new Date(temp.getTime() + (distance+7) * ONE_MINUTE_IN_MILLIS))));
-			}
-			
-			r2 = r;
+		while(!(current = GetNextChange(relations, current)).equals(relations.getLast())){
+			distance = Plan.getInstance().getDistanceBetween(last.getLigne(), current.getTarget(), last.getTarget());
+
+			if(current.getLigne().getTypeTransport().equals(Type.Metro))
+				map.put(current, (temp = new Date(temp.getTime() + (distance+4) * ONE_MINUTE_IN_MILLIS)));
+			else
+				map.put(current, GetNextTime(current.getLigne(),current.getTarget(),(temp = new Date(temp.getTime() + (distance+7) * ONE_MINUTE_IN_MILLIS))));
+						
+			last = current;
 		}
 			
-		map.put(r,GetNextTime(r.getLigne(),r.getTarget(),depart));
+			map.put(current, new Date(temp.getTime() + Plan.getInstance().getDistanceBetween(last.getLigne(), current.getTarget(), last.getTarget())*  ONE_MINUTE_IN_MILLIS));
 		
 		for(Entry<Relation,Date> ent: map.entrySet())
 			System.out.println(ent.getKey().getTarget().getName() + " -->" + ent.getKey().getLigne().getShort_name()+"--->" + ent.getValue());

@@ -11,8 +11,11 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+
+import algo_ratp.DALProvider;
 
 public class IHM_InitIdentifier extends IHM_RATP implements ActionListener
 {	
@@ -20,13 +23,13 @@ public class IHM_InitIdentifier extends IHM_RATP implements ActionListener
 	private  JButton jBt_ConnexionString = new JButton("Valider"); 
 	private JButton jBt_Cancel = new JButton("Retour");
 	
-	private TextField txt_DataBaseName = new TextField();
-	private TextField txt_ConnexionString = new TextField("ex: Data Source=.SQLEXPRESS; Initial Catalog=Base1; Integrated Security=true" ); 
+	private TextField txt_UserName = new TextField();
+	private TextField txt_ConnexionString = new TextField("ex: localhost/MyDatabase" ); 
 	private JPasswordField txt_Password = new JPasswordField();
 	private JPasswordField txt_PasswordBis = new JPasswordField();
 	
-	private JLabel jLab_DataBase = new JLabel("Base de donnée : ");
-	private JLabel jLab_ConnexionString = new JLabel("Chaine de Connection : ");
+	private JLabel jLab_username = new JLabel("Nom d'utilisateur : ");
+	private JLabel jLab_ConnexionString = new JLabel("Chaine de Connexion : ");
 	private JLabel jLab_Password = new JLabel("Mot de passe : ");
 	private JLabel jLab_PasswordBis = new JLabel("Confirmer le mot de passe : ");
 	
@@ -66,7 +69,7 @@ public class IHM_InitIdentifier extends IHM_RATP implements ActionListener
         jPan4a.setBackground(Color.WHITE);
         jPan4a.setBorder(BorderFactory.createMatteBorder(3, 5, 3, 5, Color.BLACK));
         jPan4a.setPreferredSize(new Dimension(170,32));
-        jPan4a.add(jLab_DataBase);
+        jPan4a.add(jLab_username);
 		gBC_gBLay_Level_2.gridx = 0;
 		gBC_gBLay_Level_2.gridy = 2;
 		gBC_gBLay_Level_2.gridwidth = 1;
@@ -81,7 +84,7 @@ public class IHM_InitIdentifier extends IHM_RATP implements ActionListener
         gBC_gBLay_Level_2.gridheight = 1;
         gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
         gBC_gBLay_Level_2.insets = new Insets(2, 2, 2, 2);
-        jPan4.add(txt_DataBaseName, gBC_gBLay_Level_2);
+        jPan4.add(txt_UserName, gBC_gBLay_Level_2);
         
         //*******************************************
         JPanel jPan4b = new JPanel();
@@ -127,27 +130,27 @@ public class IHM_InitIdentifier extends IHM_RATP implements ActionListener
         gBC_gBLay_Level_2.insets = new Insets(2, 2, 2, 2);
         jPan4.add(txt_PasswordBis, gBC_gBLay_Level_2); 
         
-        txt_DataBaseName.setPreferredSize(new Dimension(125,25));
+        txt_UserName.setPreferredSize(new Dimension(125,25));
 		txt_ConnexionString.setPreferredSize(new Dimension(125,30));
         txt_Password.setPreferredSize(new Dimension(125,30));
 		txt_PasswordBis.setPreferredSize(new Dimension(125,30));
 		
-		txt_DataBaseName.setMinimumSize(new Dimension(125,25));
+		txt_UserName.setMinimumSize(new Dimension(125,25));
 		txt_ConnexionString.setMinimumSize(new Dimension(125,25));
 		txt_Password.setMinimumSize(new Dimension(125,30));
 		txt_PasswordBis.setMinimumSize(new Dimension(125,30));
 		
-		txt_DataBaseName.setMaximumSize(new Dimension(125,25));
+		txt_UserName.setMaximumSize(new Dimension(125,25));
 		txt_ConnexionString.setMaximumSize(new Dimension(125,25));
 		txt_Password.setMaximumSize(new Dimension(125,30));
 		txt_PasswordBis.setMaximumSize(new Dimension(125,30));
 		
-		txt_DataBaseName.setFont(police);
+		txt_UserName.setFont(police);
 		txt_ConnexionString.setFont(police);
 		txt_Password.setFont(police);
 		txt_PasswordBis.setFont(police);
 		
-		jLab_DataBase.setFont(police);
+		jLab_username.setFont(police);
 		jLab_ConnexionString.setFont(police);
 		jLab_Password.setFont(police);
 		jLab_PasswordBis.setFont(police);
@@ -171,8 +174,21 @@ public class IHM_InitIdentifier extends IHM_RATP implements ActionListener
 		}
 		if(e.getSource()==this.jBt_ConnexionString)
 		{
-			this.dispose();
-			IHM_search search = new IHM_search();
+			if(new String(txt_Password.getPassword()).isEmpty() || new String(txt_PasswordBis.getPassword()).isEmpty() || txt_ConnexionString.getText().isEmpty() || txt_UserName.getText().isEmpty()){
+				JOptionPane.showMessageDialog (this,"Veillez à remplir tous les champs.","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
+				return;
+			}
+			if(!new String(txt_Password.getPassword()).equals(new String(txt_PasswordBis.getPassword()))){
+				JOptionPane.showMessageDialog (this,"Les mots de passes ne sont pas identiques.","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
+				return;
+			}
+			if(DALProvider.getInstance().initIdentifiers(txt_UserName.getText(), new String(txt_Password.getPassword()), txt_ConnexionString.getText())){
+				this.dispose();
+				IHM_search search = new IHM_search();
+			}
+			else{
+				JOptionPane.showMessageDialog (this,"Connexion impossible. Vérifier tous les paramètres","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
+			}
 		}
 		
 	}

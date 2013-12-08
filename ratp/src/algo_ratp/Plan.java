@@ -47,7 +47,24 @@ public class Plan {
 		
 		return INSTANCE;
 	}
+	
+	public ArrayList<Station> GetStations(){
+		if(this.plan == null)
+			return new ArrayList<Station>();
 		
+		ArrayList<Station> stations = new ArrayList<Station>();
+		
+		for(ArrayList<Station> s : this.plan.values()){
+			for(Station sta : s)
+			{
+				if(!stations.contains(sta))
+					stations.add(sta);
+			}
+		}
+		
+		return stations;
+	}
+	
 	public ArrayList<Ligne> GetLigneByShortName(String name){
 		if(this.plan == null)
 			return null;

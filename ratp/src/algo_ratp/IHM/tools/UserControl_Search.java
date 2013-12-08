@@ -4,6 +4,8 @@ import java.awt.GridLayout;
 import java.awt.TextField;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -13,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
+
+import algo_ratp.Station;
 
 
 
@@ -33,6 +37,17 @@ public class UserControl_Search extends JPanel
 		results.setBorder(BorderFactory.createEtchedBorder());
 		windowSearch = new JWindow();
 		windowSearch.add(new JScrollPane(results));
+
+		results.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		    	System.out.println("ok");
+		        if (evt.getClickCount() == 2) {
+		        	zoneText.setText(results.getSelectedValue().toString());
+					windowSearch.setVisible(false);
+		        } 
+		        
+		    }
+		});
 		
 		zoneText.addKeyListener(new KeyListener() 
 		{
@@ -49,6 +64,7 @@ public class UserControl_Search extends JPanel
 				
 				if(e.getKeyCode()==KeyEvent.VK_DOWN)
 				{
+					
 					if(results.getSelectedIndex()<results.getModel().getSize())
 					{
 						results.setSelectedIndex(results.getSelectedIndex()+1);
@@ -85,22 +101,21 @@ public class UserControl_Search extends JPanel
 		});
 		this.add(zoneText);
 	}
+	
+	public JList getList(){
+		return this.results;		
+	}
 
 	public void update()
 	{
-		List<String> correspondants = model.getChainesCorrespondates(zoneText.getText());
+		List<Station> correspondants = model.getChainesCorrespondates(zoneText.getText());
 		modelList.clear();
-		if(correspondants.size()==0)
-		{
-			modelList.addElement("(vide)");
-		}
-		else
-		{
-			for(String s : correspondants)
+		
+			for(Station s : correspondants)
 			{
 				modelList.addElement(s);
 			}
-		}
+		
 		windowSearch.setBounds((int)getLocationOnScreen().getX(), (int)getLocationOnScreen().getY()+zoneText.getHeight(), getWidth(), 3*zoneText.getHeight());
 		windowSearch.setVisible(true);
 		results.setSelectedIndex(0);

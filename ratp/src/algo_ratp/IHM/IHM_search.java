@@ -7,13 +7,19 @@ import java.awt.Insets;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import algo_ratp.DALProvider;
+import algo_ratp.Dijkstra;
+import algo_ratp.Relation;
+import algo_ratp.Station;
 import algo_ratp.IHM.tools.UserControl_Search;
 
 
@@ -30,6 +36,9 @@ public class IHM_search extends IHM_RATP implements ActionListener
 	
 	private JLabel jLab_Departure = new JLabel("Départ: ");
 	private JLabel jLab_Arrival = new JLabel("Arrivée : ");
+	
+	private UserControl_Search jList_Departure = new UserControl_Search(AutoCpltMod_Data,txt_Departure);
+	private UserControl_Search jList_Arrival = new UserControl_Search(AutoCpltMod_Data,txt_Arrival);
 	
 	public IHM_search()
 	{
@@ -60,7 +69,7 @@ public class IHM_search extends IHM_RATP implements ActionListener
         gBC_gBLay_Level_2.gridheight = 1;
         gBC_gBLay_Level_2.anchor = GridBagConstraints.LINE_START;
         gBC_gBLay_Level_2.insets = new Insets(2, 2, 2, 2);
-        jPan4.add(new UserControl_Search(AutoCpltMod_Data,txt_Departure), gBC_gBLay_Level_2);
+        jPan4.add(jList_Departure, gBC_gBLay_Level_2);
         
         JPanel jPan4b = new JPanel();
         jPan4b.setBackground(Color.WHITE);
@@ -81,7 +90,7 @@ public class IHM_search extends IHM_RATP implements ActionListener
         gBC_gBLay_Level_2.gridheight = 1;
         gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
         gBC_gBLay_Level_2.insets = new Insets(2, 2, 2, 2);
-        jPan4.add(new UserControl_Search(AutoCpltMod_Data,txt_Arrival), gBC_gBLay_Level_2);   
+        jPan4.add(jList_Arrival, gBC_gBLay_Level_2);   
        
         txt_Departure.setPreferredSize(new Dimension(115,25));
 		txt_Arrival.setPreferredSize(new Dimension(115,25));
@@ -118,7 +127,7 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		}
 		if(e.getSource()==this.jBt_AdvancedSearch)
 		{
-			if(true)//si les parametre de connection sont pas saisie
+			if(!DALProvider.getInstance().isAuth())//si les parametre de connection sont pas saisie
 			{
 				JOptionPane.showMessageDialog (this,"Renseignez les Paramètres pour vous connecter","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro 
 			}
@@ -130,12 +139,14 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		}
 		if(e.getSource()==this.jBt_FindRoad)
 		{
-			if(false)//si les parametre de connection sont pas saisie
+			if(!DALProvider.getInstance().isAuth())//si les parametre de connection sont pas saisie
 			{
 				JOptionPane.showMessageDialog (this,"Renseignez les Paramètres pour vous connecter","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro 
 			}
 			else
 			{
+				Dijkstra.execute((Station)jList_Departure.getList().getSelectedValue());
+				LinkedList<Relation> relations = Dijkstra.getPath((Station)jList_Arrival.getList().getSelectedValue());
 				this.dispose();
 				IHM_result result=new IHM_result();
 			}			
