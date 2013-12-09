@@ -72,8 +72,10 @@ public class Dijkstra {
 				if(!r.getLigne().getShort_name().equalsIgnoreCase(current.getShort_name())){
 					rel.add(r);
 					current = r.getLigne();
+					if(r.getTarget().equals(relations.getLast().getTarget()))
+							break;
 				}
-				else if(r.equals(relations.getLast())){
+				else if(r.getTarget().equals(relations.getLast().getTarget())){
 					rel.add(r);
 					break;
 				}

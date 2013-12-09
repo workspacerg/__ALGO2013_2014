@@ -93,7 +93,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			}
 					
 			PicturesTools icone_wayOfTravel = new PicturesTools();			
-			String[] s = new String[]{"    "+previous.getKey().getTarget().getName()+" jusqu'à "+ent.getKey().getTarget().getName()+"      " + (((ent.getValue().getTime() - previous.getValue().getTime()) / 60000) - nbWalk)+ "min"};
+			String[] s = new String[]{"    "+previous.getKey().getTarget().getName()+" jusqu'à "+ent.getKey().getTarget().getName()+"      " + (((ent.getValue().getTime() - previous.getValue().getTime()) / 60000))+ "min"};
 
 			String ligne_sn = previous.getKey().getLigne().getShort_name().toUpperCase();
 			icone_wayOfTravel.setFichierImage(ligne_sn); 
@@ -117,10 +117,11 @@ public class IHM_result extends IHM_RATP implements ActionListener
 	    }
 		
 		if(previous != null){
+			int nbWalk = previous.getKey().getLigne().getTypeTransport().equals(algo_ratp.Type.Metro) ? 4 : 7;
 			JPanel jp = createJPanel(Color.WHITE, true);		       
 		    jp = defineJPanelLayoutManager(jp);
-		    calendar.setTime(previous.getValue());
-		    jp=addElement(new String[]{"Arriv�e � "+String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))},jp);
+		    calendar.setTime(new Date(previous.getValue().getTime() + ((j-1)*nbWalk*60000)));
+		    jp=addElement(new String[]{"Arrivée a "+String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))},jp);
 		    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
 		    gBC_gBLay_Level_2.gridx = 0;
 		    gBC_gBLay_Level_2.gridy = i++;
@@ -133,7 +134,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 		else{
 			JPanel jp = createJPanel(Color.WHITE, true);		       
 		    jp = defineJPanelLayoutManager(jp);
-		    jp=addElement(new String[]{"Pas de chemin trouv� pour ces stations."},jp);
+		    jp=addElement(new String[]{"Pas de chemin trouvé pour ces stations."},jp);
 		    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
 		    gBC_gBLay_Level_2.gridx = 0;
 		    gBC_gBLay_Level_2.gridy = i++;
@@ -203,7 +204,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 		if(previous == null){
 			JPanel jp = createJPanel(Color.WHITE, true);		       
 		    jp = defineJPanelLayoutManager(jp);
-		    jp=addElement(new String[]{"Pas de chemin trouv� pour ces stations."},jp);
+		    jp=addElement(new String[]{"Pas de chemin trouvé pour ces stations."},jp);
 		    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
 		    gBC_gBLay_Level_2.gridx = 0;
 		    gBC_gBLay_Level_2.gridy = i++;

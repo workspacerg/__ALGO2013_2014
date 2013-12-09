@@ -230,15 +230,13 @@ private Relation GetNextChange(LinkedList<Relation> relations, Relation depart){
 private Relation getPreviousChange(LinkedList<Relation> relations, Relation arrivee){
 	
 	int index = relations.indexOf(arrivee);
-	Ligne l = relations.get(index - 1).getLigne();
+	Ligne l = relations.get(index-1).getLigne();
 	
 	int i;
 	Relation prev = arrivee;
-	for(i=index - 1;i>0;i--){
-		if(!relations.get(i).getLigne().equals(l)){
-			System.out.println(prev.getTarget());
+	for(i=index;i>0;i--){
+		if(!relations.get(i).getLigne().equals(l))
 			return prev;
-		}
 		prev = relations.get(i);
 	}
 	
@@ -311,34 +309,31 @@ public LinkedHashMap<Relation,Date> GetRealPathWithArrival(LinkedList<Relation> 
 	try{
 		if(relations == null)
 			return new LinkedHashMap<Relation,Date>();
-		
+			
 		LinkedHashMap<Relation, Date> map = new LinkedHashMap<Relation, Date>();
+		relations = Dijkstra.getRealPath(relations);
 		
-		Date temp = arrivee;
-		Relation end = relations.getLast();
+		Date temp = null;	
 		
-		if(end.getLigne().getTypeTransport().equals(Type.Metro))
-			map.put(end, temp);
-		else
-			map.put(end, getPreviousTime(end.getLigne(),end.getTarget(),temp));
-		
-		Relation current = end;
-		Relation next = end;
 		int distance;
-		
-		while(!(current = getPreviousChange(relations, current)).equals(relations.getFirst())){
-			distance = Plan.getInstance().getDistanceBetween(current.getLigne(), current.getTarget(), next.getTarget());
-
-			if(current.getLigne().getTypeTransport().equals(Type.Metro))
-				map.put(current, (temp = new Date(temp.getTime() - (distance+4) * ONE_MINUTE_IN_MILLIS)));
+		Relation r;
+		for(int i = relations.size() - 1;i>0;i--){
+			r = relations.get(i);
+			distance = Plan.getInstance().getDistanceBetween(relations.get(i-1).getLigne(), r.getTarget(), relations.get(i-1).getTarget());
+			
+			if(temp == null)
+				temp = arrivee;
 			else
-				map.put(current, getPreviousTime(current.getLigne(),current.getTarget(),(temp = new Date(temp.getTime() - (distance+7) * ONE_MINUTE_IN_MILLIS))));
+				distance += r.getLigne().getTypeTransport().equals(Type.Metro) ? 4 : 7;
+			
+			if(r.getLigne().getTypeTransport().equals(Type.Metro))
+				map.put(r, (temp = new Date(temp.getTime() - distance * ONE_MINUTE_IN_MILLIS)));
+			else
+				map.put(r, getPreviousTime(r.getLigne(),r.getTarget(),(temp = new Date(temp.getTime() - distance * ONE_MINUTE_IN_MILLIS))));
 						
-			next = current;
 		}
-		
-		int walk = current.getLigne().getTypeTransport().equals(Type.Metro) ? 4 : 7;
-		map.put(current, new Date(temp.getTime() - ((Plan.getInstance().getDistanceBetween(current.getLigne(), current.getTarget(), next.getTarget())+walk)*  ONE_MINUTE_IN_MILLIS)));
+			
+		map.put(relations.get(0), new Date(temp.getTime() - ((Plan.getInstance().getDistanceBetween(relations.get(0).getLigne(), relations.get(0).getTarget(), relations.get(1).getTarget()))*  ONE_MINUTE_IN_MILLIS)));
 		
 		ArrayList<Entry<Relation,Date>> changeOrder = new ArrayList<Map.Entry<Relation,Date>>();
 		changeOrder.addAll(map.entrySet());
@@ -369,10 +364,10 @@ public LinkedHashMap<Relation,Date> GetRealPathWithTime(LinkedList<Relation> rel
 	try{
 		LinkedHashMap<Relation,Date> map = new LinkedHashMap<Relation, Date>();
 		
-		Date temp = depart;
+		Date temp = null;
 		
 		if(relations.getFirst().getLigne().getTypeTransport().equals(Type.Metro))
-			map.put(relations.getFirst(), temp);
+			map.put(relations.getFirst(), depart);
 		else
 			map.put(relations.getFirst(), GetNextTime(relations.getFirst().getLigne(),relations.getFirst().getTarget(),depart));
 		
@@ -382,11 +377,15 @@ public LinkedHashMap<Relation,Date> GetRealPathWithTime(LinkedList<Relation> rel
 			
 		while(!(current = GetNextChange(relations, current)).equals(relations.getLast())){
 			distance = Plan.getInstance().getDistanceBetween(last.getLigne(), current.getTarget(), last.getTarget());
+			if(temp == null)
+				temp = depart;
+			else
+				distance += current.getLigne().getTypeTransport().equals(Type.Metro) ? 4 : 7;
 			
 			if(current.getLigne().getTypeTransport().equals(Type.Metro))
-				map.put(current, (temp = new Date(temp.getTime() + (distance+4) * ONE_MINUTE_IN_MILLIS)));
+				map.put(current, (temp = new Date(temp.getTime() + (distance * ONE_MINUTE_IN_MILLIS))));
 			else
-				map.put(current, GetNextTime(current.getLigne(),current.getTarget(),(temp = new Date(temp.getTime() + (distance+7) * ONE_MINUTE_IN_MILLIS))));
+				map.put(current, GetNextTime(current.getLigne(),current.getTarget(),(temp = new Date(temp.getTime() + (distance * ONE_MINUTE_IN_MILLIS)))));
 						
 			last = current;
 		}
