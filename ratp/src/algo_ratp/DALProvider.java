@@ -337,7 +337,8 @@ public LinkedHashMap<Relation,Date> GetRealPathWithArrival(LinkedList<Relation> 
 			next = current;
 		}
 		
-		map.put(current, new Date(temp.getTime() + (Plan.getInstance().getDistanceBetween(current.getLigne(), current.getTarget(), next.getTarget())*  ONE_MINUTE_IN_MILLIS)));
+		int walk = current.getLigne().getTypeTransport().equals(Type.Metro) ? 4 : 7;
+		map.put(current, new Date(temp.getTime() - ((Plan.getInstance().getDistanceBetween(current.getLigne(), current.getTarget(), next.getTarget())+walk)*  ONE_MINUTE_IN_MILLIS)));
 		
 		ArrayList<Entry<Relation,Date>> changeOrder = new ArrayList<Map.Entry<Relation,Date>>();
 		changeOrder.addAll(map.entrySet());
@@ -346,10 +347,7 @@ public LinkedHashMap<Relation,Date> GetRealPathWithArrival(LinkedList<Relation> 
 		map.clear();
 				
 		for(Entry<Relation,Date> ent : changeOrder)
-		{
-			System.out.println(ent.getKey().getLigne().getShort_name() + "--->" + ent.getKey().getTarget());
 			map.put(ent.getKey(), ent.getValue());
-		}
 		
 		return map;
 	}
@@ -384,7 +382,7 @@ public LinkedHashMap<Relation,Date> GetRealPathWithTime(LinkedList<Relation> rel
 			
 		while(!(current = GetNextChange(relations, current)).equals(relations.getLast())){
 			distance = Plan.getInstance().getDistanceBetween(last.getLigne(), current.getTarget(), last.getTarget());
-
+			
 			if(current.getLigne().getTypeTransport().equals(Type.Metro))
 				map.put(current, (temp = new Date(temp.getTime() + (distance+4) * ONE_MINUTE_IN_MILLIS)));
 			else
@@ -393,7 +391,8 @@ public LinkedHashMap<Relation,Date> GetRealPathWithTime(LinkedList<Relation> rel
 			last = current;
 		}
 			
-		map.put(current, new Date(temp.getTime() + (Plan.getInstance().getDistanceBetween(last.getLigne(), current.getTarget(), last.getTarget())*  ONE_MINUTE_IN_MILLIS)));
+		int walk = current.getLigne().getTypeTransport().equals(Type.Metro) ? 4 : 7;
+		map.put(current, new Date(temp.getTime() + ((Plan.getInstance().getDistanceBetween(last.getLigne(), current.getTarget(), last.getTarget())+walk)*  ONE_MINUTE_IN_MILLIS)));
 				
 		return map;
 	}

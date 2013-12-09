@@ -29,12 +29,11 @@ public class PicturesTools extends JComponent
 		return aFilePicture;
     }
 	
-	public void setFichierImage(File aFilePicture) 
+	public void setFichierImage(String aFilePicture) 
     {
 	     try 
 	     {
-		     this.myFilePicture = aFilePicture;
-		     myPhoto = ImageIO.read(aFilePicture);
+		     myPhoto = ImageIO.read(getClass().getResource("/"+aFilePicture+".JPG"));
 		     myPictureRate = (double)myPhoto.getWidth()/myPhoto.getHeight();
 		     //setSize(getWidth(), (int)(getWidth()/myPictureRate));
 		     repaint();      

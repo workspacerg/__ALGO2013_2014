@@ -96,7 +96,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			String[] s = new String[]{"    "+previous.getKey().getTarget().getName()+" jusqu'à "+ent.getKey().getTarget().getName()+"      " + (((ent.getValue().getTime() - previous.getValue().getTime()) / 60000) - nbWalk)+ "min"};
 
 			String ligne_sn = previous.getKey().getLigne().getShort_name().toUpperCase();
-			icone_wayOfTravel.setFichierImage( PicturesTools.createFichierImage(System.getProperty("user.dir" ).toString()+"\\image\\",ligne_sn+".jpg")); 
+			icone_wayOfTravel.setFichierImage(ligne_sn); 
 			icone_wayOfTravel.setPreferredSize(new Dimension(45,45));
 			
 		    JPanel jp = createJPanel(Color.WHITE, true);		       
@@ -181,7 +181,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			String[] s = new String[]{"    "+previous.getTarget().getName()+" jusqu'à "+rel.getTarget().getName()};
 			
 			String ligne_sn = previous.getLigne().getShort_name().toUpperCase();
-			icone_wayOfTravel.setFichierImage( PicturesTools.createFichierImage(System.getProperty("user.dir" ).toString()+"\\image\\",ligne_sn+".jpg"));
+			icone_wayOfTravel.setFichierImage(ligne_sn);
 			icone_wayOfTravel.setPreferredSize(new Dimension(45,45));
 			
 		    JPanel jp = createJPanel(Color.WHITE, true);		       

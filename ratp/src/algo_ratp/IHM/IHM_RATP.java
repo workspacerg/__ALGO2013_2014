@@ -95,7 +95,7 @@ public class IHM_RATP extends JFrame implements ActionListener
 		jPan2.add(jLab_Welcome,bLay_Level_2.CENTER);
 		jPan2.add(icone_RATP,bLay_Level_2.EAST);
 		
-		icone_RATP.setFichierImage( PicturesTools.createFichierImage(System.getProperty("user.dir" ).toString()+"\\image\\","ratp.jpg"));
+		icone_RATP.setFichierImage("ratp");
 		icone_RATP.setPreferredSize(new Dimension(59,46));
 		
 		jPan3.setBackground(Color.DARK_GRAY);
