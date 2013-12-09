@@ -85,9 +85,13 @@ public boolean initIdentifiers(String userN,String password,String dbPath){
 
 /**
  * Appel de la méthode connection + gestion de l'erreur de connection 
+ * > appeler en priorité initIdentifiers()
+ * @see initIdentifiers
+ * 
  * @param user
  * @param passwd
  * @param db
+ * 
  * @return
  */
 
