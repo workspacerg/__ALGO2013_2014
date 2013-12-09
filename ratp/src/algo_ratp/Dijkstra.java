@@ -29,7 +29,6 @@ public class Dijkstra {
 	
 	private static void findMinimalDistances(Relation node) {
 	    ArrayList<Relation> adjacentNodes = getNeighbors(node);
-	    
 	    for (Relation target : adjacentNodes) {
 	    	
 	      if (target.getTarget().getMinDistance() > node.getTarget().getMinDistance()
@@ -57,8 +56,8 @@ public class Dijkstra {
 	public static LinkedList<Relation> getRealPath(LinkedList<Relation> relations){
 		try{
 			if(relations == null)
-				return null;
-			
+				return new LinkedList<Relation>();
+						
 			LinkedList<Relation> rel = new LinkedList<Relation>();
 			Ligne current = new Ligne();
 			int i = 0;
@@ -70,13 +69,13 @@ public class Dijkstra {
 					i++;
 					continue;
 				}
-				
-				if(!r.getLigne().equals(current)){
+				if(!r.getLigne().getShort_name().equalsIgnoreCase(current.getShort_name())){
 					rel.add(r);
 					current = r.getLigne();
 				}
 				else if(r.equals(relations.getLast())){
 					rel.add(r);
+					break;
 				}
 			}
 			
@@ -107,6 +106,13 @@ public class Dijkstra {
 	  }
 	
     private static Relation GetRelationFromSource(Station source,Station target){
+    	if(Plan.getInstance().getAvoidRelations().containsKey(target)){
+    		for(Relation r : Plan.getInstance().getRelations().get(target)){
+        		if(r.getTarget().equals(source))
+        			return r;
+        	}
+    	}
+    	
     	for(Relation r : Plan.getInstance().getRelations().get(source)){
     		if(r.getTarget().equals(target))
     			return r;

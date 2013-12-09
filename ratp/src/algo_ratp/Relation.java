@@ -14,6 +14,10 @@ public class Relation {
 		return weight;
 	}
 	
+	public void setLigne(Ligne _l){
+		ligne = _l;
+	}
+	
 	public void setWeight(int _wei){
 		weight = _wei;
 	}

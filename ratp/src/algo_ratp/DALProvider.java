@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -221,6 +223,25 @@ private Relation GetNextChange(LinkedList<Relation> relations, Relation depart){
 	return relations.get(i-1);
 }
 
+private Relation getPreviousChange(LinkedList<Relation> relations, Relation arrivee){
+	
+	int index = relations.indexOf(arrivee);
+	Ligne l = relations.get(index - 1).getLigne();
+	
+	int i;
+	Relation prev = arrivee;
+	for(i=index - 1;i>0;i--){
+		if(!relations.get(i).getLigne().equals(l)){
+			System.out.println(prev.getTarget());
+			return prev;
+		}
+		prev = relations.get(i);
+	}
+	
+	// Si on a fait le tour sans rien trouver c'est qu'on est au début 
+	return relations.get(0);
+}
+
 /**
  * Retourne le prochain voyage pour cette station à l'heure voulue
  * 
@@ -241,7 +262,7 @@ public Date GetNextTime(Ligne l,Station s,Date departTime){
 		String requete = "SELECT ADDTIME(departure_time,SEC_TO_TIME("+distance+"*60)) AS date FROM STOP_TIME st,TRIPS t " +
 				"WHERE t.trip_id = st.trip_id AND route_id = '"+l.getId_route()+"' " +
 				"AND departure_time > ADDTIME(STR_TO_DATE('"+calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE)+"','%H:%i'),-SEC_TO_TIME("+distance+"*60)) " +
-				"ORDER BY DEPARTURE_TIME LIMIT 1";
+				"ORDER BY departure_time LIMIT 1";
 		ResultSet result = Execquery(requete);
 		// Limit 1 donc un seul résultat, on se place dessus avec result.next()
 		result.next();
@@ -252,6 +273,87 @@ public Date GetNextTime(Ligne l,Station s,Date departTime){
 		exp.printStackTrace();
 		return null;
 	}
+}
+
+private Date getPreviousTime(Ligne l,Station s,Date arrivalTime){
+	try{
+		Station depart = Plan.getInstance().getPlan().get(l).get(0);
+		int distance = Plan.getInstance().getDistanceBetween(l, depart, s);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(arrivalTime);
+		
+		String requete = "SELECT ADDTIME(departure_time,SEC_TO_TIME("+distance+"*60)) FROM STOP_TIME st,TRIPS t " +
+				"WHERE t.trip_id = st.trip_id AND route_id = '"+l.getId_route()+"' " +
+				"AND departure_time < ADDTIME(STR_TO_DATE('"+calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE)+"','%H:%i'),-SEC_TO_TIME("+distance+"*60)) " +
+				"ORDER BY departure_time LIMIT 1";
+		
+		ResultSet result = Execquery(requete);
+		// Limit 1 donc un seul résultat, on se place dessus avec result.next()
+		result.next();
+		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+		return df.parse(result.getString(1));
+
+	}
+	catch(Exception exp){
+		exp.printStackTrace();
+		return null;
+	}
+	
+}
+
+
+
+public LinkedHashMap<Relation,Date> GetRealPathWithArrival(LinkedList<Relation> relations,Date arrivee){
+	try{
+		if(relations == null)
+			return new LinkedHashMap<Relation,Date>();
+		
+		LinkedHashMap<Relation, Date> map = new LinkedHashMap<Relation, Date>();
+		
+		Date temp = arrivee;
+		Relation end = relations.getLast();
+		
+		if(end.getLigne().getTypeTransport().equals(Type.Metro))
+			map.put(end, temp);
+		else
+			map.put(end, getPreviousTime(end.getLigne(),end.getTarget(),temp));
+		
+		Relation current = end;
+		Relation next = end;
+		int distance;
+		
+		while(!(current = getPreviousChange(relations, current)).equals(relations.getFirst())){
+			distance = Plan.getInstance().getDistanceBetween(current.getLigne(), current.getTarget(), next.getTarget());
+
+			if(current.getLigne().getTypeTransport().equals(Type.Metro))
+				map.put(current, (temp = new Date(temp.getTime() - (distance+4) * ONE_MINUTE_IN_MILLIS)));
+			else
+				map.put(current, getPreviousTime(current.getLigne(),current.getTarget(),(temp = new Date(temp.getTime() - (distance+7) * ONE_MINUTE_IN_MILLIS))));
+						
+			next = current;
+		}
+		
+		map.put(current, new Date(temp.getTime() + (Plan.getInstance().getDistanceBetween(current.getLigne(), current.getTarget(), next.getTarget())*  ONE_MINUTE_IN_MILLIS)));
+		
+		ArrayList<Entry<Relation,Date>> changeOrder = new ArrayList<Map.Entry<Relation,Date>>();
+		changeOrder.addAll(map.entrySet());
+		Collections.reverse(changeOrder);
+		
+		map.clear();
+				
+		for(Entry<Relation,Date> ent : changeOrder)
+		{
+			System.out.println(ent.getKey().getLigne().getShort_name() + "--->" + ent.getKey().getTarget());
+			map.put(ent.getKey(), ent.getValue());
+		}
+		
+		return map;
+	}
+	catch(Exception exp){
+		exp.printStackTrace();
+		return null;
+	}
+	
 }
 
 /**
@@ -287,7 +389,7 @@ public LinkedHashMap<Relation,Date> GetRealPathWithTime(LinkedList<Relation> rel
 			last = current;
 		}
 			
-			map.put(current, new Date(temp.getTime() + Plan.getInstance().getDistanceBetween(last.getLigne(), current.getTarget(), last.getTarget())*  ONE_MINUTE_IN_MILLIS));
+		map.put(current, new Date(temp.getTime() + (Plan.getInstance().getDistanceBetween(last.getLigne(), current.getTarget(), last.getTarget())*  ONE_MINUTE_IN_MILLIS)));
 				
 		return map;
 	}

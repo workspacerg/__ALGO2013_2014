@@ -63,7 +63,7 @@ public class Ligne {
 	
  	/**
  	 * Constructeur vide
- 	 * @deprecated
+ 	 * 
  	 */
 	
 	public Ligne() {

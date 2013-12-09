@@ -116,18 +116,33 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			j++;
 	    }
 		
-		JPanel jp = createJPanel(Color.WHITE, true);		       
-	    jp = defineJPanelLayoutManager(jp);
-	    calendar.setTime(previous.getValue());
-	    jp=addElement(new String[]{"Arrivée à "+String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))},jp);
-	    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
-	    gBC_gBLay_Level_2.gridx = 0;
-	    gBC_gBLay_Level_2.gridy = i++;
-		gBC_gBLay_Level_2.gridwidth = 5;
-		gBC_gBLay_Level_2.gridheight = 1;
-		gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
-		gBC_gBLay_Level_2.insets = new Insets(4, 0, 4, 0);
-		jPan4.add(jp, gBC_gBLay_Level_2);
+		if(previous != null){
+			JPanel jp = createJPanel(Color.WHITE, true);		       
+		    jp = defineJPanelLayoutManager(jp);
+		    calendar.setTime(previous.getValue());
+		    jp=addElement(new String[]{"Arrivée à "+String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))},jp);
+		    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
+		    gBC_gBLay_Level_2.gridx = 0;
+		    gBC_gBLay_Level_2.gridy = i++;
+			gBC_gBLay_Level_2.gridwidth = 5;
+			gBC_gBLay_Level_2.gridheight = 1;
+			gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
+			gBC_gBLay_Level_2.insets = new Insets(4, 0, 4, 0);
+			jPan4.add(jp, gBC_gBLay_Level_2);
+		}
+		else{
+			JPanel jp = createJPanel(Color.WHITE, true);		       
+		    jp = defineJPanelLayoutManager(jp);
+		    jp=addElement(new String[]{"Pas de chemin trouvé pour ces stations."},jp);
+		    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
+		    gBC_gBLay_Level_2.gridx = 0;
+		    gBC_gBLay_Level_2.gridy = i++;
+			gBC_gBLay_Level_2.gridwidth = 5;
+			gBC_gBLay_Level_2.gridheight = 1;
+			gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
+			gBC_gBLay_Level_2.insets = new Insets(4, 0, 4, 0);
+			jPan4.add(jp, gBC_gBLay_Level_2);
+		}
 		
 		ActionListenerForComponent(this.getContentPane());
 		Plan.getInstance().backToSvg();
@@ -185,6 +200,19 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			i++;
 	    }
 		
+		if(previous == null){
+			JPanel jp = createJPanel(Color.WHITE, true);		       
+		    jp = defineJPanelLayoutManager(jp);
+		    jp=addElement(new String[]{"Pas de chemin trouvé pour ces stations."},jp);
+		    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
+		    gBC_gBLay_Level_2.gridx = 0;
+		    gBC_gBLay_Level_2.gridy = i++;
+			gBC_gBLay_Level_2.gridwidth = 5;
+			gBC_gBLay_Level_2.gridheight = 1;
+			gBC_gBLay_Level_2.anchor = GridBagConstraints.CENTER;
+			gBC_gBLay_Level_2.insets = new Insets(4, 0, 4, 0);
+			jPan4.add(jp, gBC_gBLay_Level_2);
+		}
 		
 		ActionListenerForComponent(this.getContentPane());
 		Plan.getInstance().backToSvg();

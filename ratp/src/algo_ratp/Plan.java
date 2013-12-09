@@ -46,6 +46,14 @@ public class Plan {
 	}
 	
 	/**
+	 * Recupère les relations "interdites"
+	 *
+	 * */
+	public Map<Station,Station> getAvoidRelations(){
+		return avoidRelation;
+	}
+	 
+	/**
 	 * Mise à jour du plan
 	 * @param plan
 	 */
@@ -246,7 +254,7 @@ public class Plan {
 			}
 		}
 		
-		return distance;
+		return Math.abs(distance);
 		
 	}
 	

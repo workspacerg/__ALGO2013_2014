@@ -239,7 +239,7 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 				LinkedList<Relation> res = Dijkstra.getPath((Station)jList_Arrival.getList().getSelectedValue());
 				
 				DALProvider.getInstance().connect();
-				map = DALProvider.getInstance().GetRealPathWithTime(res, d);
+				map = DALProvider.getInstance().GetRealPathWithArrival(res, d);
 				DALProvider.getInstance().close();
 			} catch (ParseException e1) {
 				e1.printStackTrace();
