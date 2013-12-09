@@ -42,7 +42,7 @@ public class IHM_RATP extends JFrame implements ActionListener
 	protected PicturesTools icone_RATP = new PicturesTools();
 
 	protected JLabel jLab_Welcome = new JLabel("Description",JLabel.LEFT);
-	protected JLabel jLabfootPage = new JLabel("Gabel Romain - Mirabel Andy - Mokhtar Rahmani Rayane, 4AL - Copyright ©2013",JLabel.RIGHT); //alt 0169
+	protected JLabel jLabfootPage = new JLabel("Gabel Romain - Mirabel Andy - Mokhtar Rahmani Rayane, 4AL - Copyright 2013",JLabel.RIGHT); //alt 0169
 	
 	protected BorderLayout bLay_Level_0 = new BorderLayout();
 	protected BorderLayout bLay_Level_1 = new BorderLayout();

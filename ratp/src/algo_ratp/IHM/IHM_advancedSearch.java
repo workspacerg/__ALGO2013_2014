@@ -43,8 +43,8 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 	private TextField txt_Departure = new TextField();
 	private TextField txt_Arrival = new TextField();
 	
-	private JLabel jLab_Departure = new JLabel("Départ: ");
-	private JLabel jLab_Arrival = new JLabel("Arrivée : ");
+	private JLabel jLab_Departure = new JLabel("DÃ©part: ");
+	private JLabel jLab_Arrival = new JLabel("ArrivÃ©e : ");
 	
 	private UserControl_Search jList_Departure = new UserControl_Search(AutoCpltMod_Data,txt_Departure);
 	private UserControl_Search jList_Arrival = new UserControl_Search(AutoCpltMod_Data,txt_Arrival);
@@ -58,13 +58,13 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
 	public IHM_advancedSearch()
 	{
 		this.jLab_Welcome.setText("Bienvenue sur MyTraject");
-		this.setTitle("MyTraject - Recherche Avancée");
+		this.setTitle("MyTraject - Recherche AvancÃ©e");
 		
 		jPan3.add(jBt_FindRoad);	
 		jPan3.add(jBt_Back);
 		
 		//ajout pr le label en plus
-		jLab_Connection.setText(DALProvider.getInstance().isAuth() ? "Connecté à "+DALProvider.getInstance().getDbPath() : "Vous n'êtes pas connecté à une base de données.");
+		jLab_Connection.setText(DALProvider.getInstance().isAuth() ? "ConnectÃ© Ã  "+DALProvider.getInstance().getDbPath() : "Vous n'Ã©tes pas connectÃ© Ã  une base de donnÃ©es.");
 		JPanel jPan4z = new JPanel();
 		jPan4z.setBackground(Color.WHITE);
 		jPan4z.setBorder(BorderFactory.createMatteBorder(3, 5, 3, 5, Color.BLACK));
@@ -127,8 +127,8 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
         combo.setPreferredSize(new Dimension(80,25));
         combo.setMinimumSize(new Dimension(80,25));
         combo.setMaximumSize(new Dimension(80,25));
-        combo.addItem("Départ");
-        combo.addItem("Arrivée");
+        combo.addItem("DÃ©part");
+        combo.addItem("ArrivÃ©e");
         
         comboHour.setPreferredSize(new Dimension(60,25));
         comboHour.setMinimumSize(new Dimension(60,25));
@@ -178,7 +178,7 @@ public class IHM_advancedSearch extends IHM_RATP implements ActionListener
         jPan4d.setLayout(new GridLayout(3, 1));
         jPan4d.add(fasterButton);
         jPan4d.add(lessConnection);
-        jPan4d.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Critère"));
+        jPan4d.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "CritÃ¨re"));
         
         JPanel jPan4e = new JPanel();
         jPan4e.setBackground(Color.WHITE);

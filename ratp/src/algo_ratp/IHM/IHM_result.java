@@ -36,8 +36,8 @@ public class IHM_result extends IHM_RATP implements ActionListener
 	public IHM_result(LinkedHashMap<Relation,Date> map) 
 	{
 		mapResults = map;
-		this.jLab_Welcome.setText("Résultat de la recherche");
-		this.setTitle("MyTraject - Itinéraire");
+		this.jLab_Welcome.setText("RÃ©sultat de la recherche");
+		this.setTitle("MyTraject - ItinÃ¨raire");
 		
 		jPan3.add(jBt_SearchModification);
 		jPan3.add(jBt_Exit);
@@ -63,7 +63,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			    JPanel jp = createJPanel(Color.WHITE, true);		       
 			    jp = defineJPanelLayoutManager(jp);
 			    calendar.setTime(ent.getValue());
-			    jp=addElement(new String[]{"Départ à "+String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))},jp);
+			    jp=addElement(new String[]{"DÃ©part Ã  "+String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))},jp);
 			    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
 			    gBC_gBLay_Level_2.gridx = 0;
 			    gBC_gBLay_Level_2.gridy = i++;
@@ -81,7 +81,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			if(j>0){
 				JPanel jp2 = createJPanel(Color.GRAY,true);
 				jp2 = defineJPanelLayoutManager(jp2);
-				jp2 = addElement(new String[]{"Marche à pied "+nbWalk+"min"},jp2);
+				jp2 = addElement(new String[]{"Marche Ã  pied "+nbWalk+"min"},jp2);
 				gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
 			    gBC_gBLay_Level_2.gridx = 0;
 			    gBC_gBLay_Level_2.gridy = i++;
@@ -93,7 +93,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			}
 					
 			PicturesTools icone_wayOfTravel = new PicturesTools();			
-			String[] s = new String[]{"    "+previous.getKey().getTarget().getName()+" jusqu'à "+ent.getKey().getTarget().getName()+"      " + (((ent.getValue().getTime() - previous.getValue().getTime()) / 60000) - nbWalk)+ "min"};
+			String[] s = new String[]{"    "+previous.getKey().getTarget().getName()+" jusqu'Ã  "+ent.getKey().getTarget().getName()+"      " + (((ent.getValue().getTime() - previous.getValue().getTime()) / 60000) - nbWalk)+ "min"};
 
 			String ligne_sn = previous.getKey().getLigne().getShort_name().toUpperCase();
 			icone_wayOfTravel.setFichierImage( PicturesTools.createFichierImage(System.getProperty("user.dir" ).toString()+"\\image\\",ligne_sn+".jpg")); 
@@ -119,7 +119,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 		JPanel jp = createJPanel(Color.WHITE, true);		       
 	    jp = defineJPanelLayoutManager(jp);
 	    calendar.setTime(previous.getValue());
-	    jp=addElement(new String[]{"Arrivée à "+String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))},jp);
+	    jp=addElement(new String[]{"ArrivÃ©e Ã  "+String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE))},jp);
 	    gBC_gBLay_Level_2.fill=GridBagConstraints.HORIZONTAL;
 	    gBC_gBLay_Level_2.gridx = 0;
 	    gBC_gBLay_Level_2.gridy = i++;
@@ -137,8 +137,8 @@ public class IHM_result extends IHM_RATP implements ActionListener
 	public IHM_result(LinkedList<Relation> list) 
 	{
 		listRel = list;
-		this.jLab_Welcome.setText("Résultat de la recherche");
-		this.setTitle("MyTraject - Itinéraire");
+		this.jLab_Welcome.setText("RÃ©sultat de la recherche");
+		this.setTitle("MyTraject - ItinÃ©raire");
 		
 		jPan3.add(jBt_SearchModification);
 		jPan3.add(jBt_Exit);
@@ -163,7 +163,7 @@ public class IHM_result extends IHM_RATP implements ActionListener
 			}
 			
 			PicturesTools icone_wayOfTravel = new PicturesTools();
-			String[] s = new String[]{"    "+previous.getTarget().getName()+" jusqu'à "+rel.getTarget().getName()};
+			String[] s = new String[]{"    "+previous.getTarget().getName()+" jusqu'Ã  "+rel.getTarget().getName()};
 			
 			String ligne_sn = previous.getLigne().getShort_name().toUpperCase();
 			icone_wayOfTravel.setFichierImage( PicturesTools.createFichierImage(System.getProperty("user.dir" ).toString()+"\\image\\",ligne_sn+".jpg"));

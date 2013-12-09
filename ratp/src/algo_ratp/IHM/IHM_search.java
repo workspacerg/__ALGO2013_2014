@@ -28,16 +28,16 @@ import algo_ratp.IHM.tools.UserControl_Search;
 public class IHM_search extends IHM_RATP implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
-	private JButton jBt_Parameter=new JButton("Paramètre");
+	private JButton jBt_Parameter=new JButton("ParamÃ¨tre");
 	private JButton jBt_FindRoad = new JButton("Trouver"); 
-	private JButton jBt_AdvancedSearch = new JButton("Recherche avancée"); 
+	private JButton jBt_AdvancedSearch = new JButton("Recherche avancÃ©e"); 
 	private JButton jBt_Exit = new JButton("Exit");
 	
 	private TextField txt_Departure = new TextField();
 	private TextField txt_Arrival = new TextField();
 	
-	private JLabel jLab_Departure = new JLabel("Départ: ");
-	private JLabel jLab_Arrival = new JLabel("Arrivée : ");
+	private JLabel jLab_Departure = new JLabel("DÃ©part: ");
+	private JLabel jLab_Arrival = new JLabel("ArrivÃ©e : ");
 	
 	private UserControl_Search jList_Departure = new UserControl_Search(AutoCpltMod_Data,txt_Departure);
 	private UserControl_Search jList_Arrival = new UserControl_Search(AutoCpltMod_Data,txt_Arrival);
@@ -55,7 +55,7 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		
 		
 		//ajout pr le label en plus
-		jLab_Connection.setText(DALProvider.getInstance().isAuth() ? "Connecté à "+DALProvider.getInstance().getDbPath() : "Vous n'êtes pas connecté à une base de données.");
+		jLab_Connection.setText(DALProvider.getInstance().isAuth() ? "ConnectÃ© Ã  "+DALProvider.getInstance().getDbPath() : "Vous n'Ã©tes pas connectÃ© Ã  une base de donnÃ©es.");
 		JPanel jPan4c = new JPanel();
         jPan4c.setPreferredSize(new Dimension(405,32));
         jPan4c.add(jLab_Connection);
@@ -153,7 +153,7 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		{
 			if(!DALProvider.getInstance().isAuth())//si les parametre de connection sont pas saisie
 			{
-				JOptionPane.showMessageDialog (this,"Renseignez les Paramètres pour vous connecter","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro 
+				JOptionPane.showMessageDialog (this,"Renseignez les ParamÃ¨tres pour vous connecter","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro 
 			}
 			else
 			{
@@ -165,7 +165,7 @@ public class IHM_search extends IHM_RATP implements ActionListener
 		{
 			if(!DALProvider.getInstance().isAuth())//si les parametre de connection sont pas saisie
 			{
-				JOptionPane.showMessageDialog (this,"Renseignez les Paramètres pour vous connecter","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro 
+				JOptionPane.showMessageDialog (this,"Renseignez les ParamÃ¨tres pour vous connecter","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro 
 			}
 			else
 			{
@@ -177,7 +177,7 @@ public class IHM_search extends IHM_RATP implements ActionListener
 				}
 				else
 				{
-					JOptionPane.showMessageDialog (this,"Veuillez séléctionner le chemin à trouver.","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
+					JOptionPane.showMessageDialog (this,"Veuillez sÃ©lÃ¨ctionner le chemin Ã  trouver.","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
 				}
 			}			
 		}
