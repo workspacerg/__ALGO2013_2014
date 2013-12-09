@@ -175,7 +175,7 @@ public class IHM_InitIdentifier extends IHM_RATP implements ActionListener
 		if(e.getSource()==this.jBt_ConnexionString)
 		{
 			if(new String(txt_Password.getPassword()).isEmpty() || new String(txt_PasswordBis.getPassword()).isEmpty() || txt_ConnexionString.getText().isEmpty() || txt_UserName.getText().isEmpty()){
-				JOptionPane.showMessageDialog (this,"Veillez à remplir tous les champs.","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
+				JOptionPane.showMessageDialog (this,"Veillez Ã© remplir tous les champs.","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
 				return;
 			}
 			if(!new String(txt_Password.getPassword()).equals(new String(txt_PasswordBis.getPassword()))){
@@ -187,7 +187,7 @@ public class IHM_InitIdentifier extends IHM_RATP implements ActionListener
 				IHM_search search = new IHM_search();
 			}
 			else{
-				JOptionPane.showMessageDialog (this,"Connexion impossible. Vérifier tous les paramètres","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
+				JOptionPane.showMessageDialog (this,"Connexion impossible. VÃ©rifier tous les paramÃ¨tres","MyTraject message",1);//1:exclam,1:exclamTriangle,3:interro
 			}
 		}
 		

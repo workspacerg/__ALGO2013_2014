@@ -20,13 +20,13 @@ public class IHM_home extends IHM_RATP
 {
 	private static final long serialVersionUID = 1L;
 	private JButton jBt_FindRoad = new JButton("Trouver"); 
-	private JButton jBt_AdvancedSearch = new JButton("Recherche avancée"); 
+	private JButton jBt_AdvancedSearch = new JButton("Recherche avancÃ©e"); 
 	
 	private TextField txt_Departure = new TextField();
 	private TextField txt_Arrival = new TextField();
 	
-	private JLabel jLab_Departure = new JLabel("Départ: ");
-	private JLabel jLab_Arrival = new JLabel("Arrivée : ");
+	private JLabel jLab_Departure = new JLabel("DÃ©part: ");
+	private JLabel jLab_Arrival = new JLabel("ArrivÃ©e : ");
 	
 	public IHM_home()
 	{
